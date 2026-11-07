@@ -19,9 +19,26 @@ export const site = {
     'We exist to facilitate scientific collaboration, encourage interdisciplinary research, advance evidence-based medicine and contribute to the global medical literature.',
 
   contact: {
-    email: 'Medatlas1521@gmail.com',
+    email: 'medatlas1521@gmail.com',
     location: 'India · Türkiye · distributed internationally',
     responseTime: 'We aim to answer every enquiry within five working days.',
+  },
+
+  /* Where completed forms are delivered. The WhatsApp number is digits
+     only, with country code and no plus sign or spaces. */
+  delivery: {
+    email: 'medatlas1521@gmail.com',
+    whatsapp: '918003735362',
+    whatsappDisplay: '+91 8003735362',
+  },
+
+  /* Headline network figures. These are stated by MedAtlas rather than
+     counted from the directory below, because most members have not yet
+     published a profile page. Keep them current. */
+  networkStats: {
+    researchers: 84,
+    countries: 19,
+    institutions: 29,
   },
 
   social: [

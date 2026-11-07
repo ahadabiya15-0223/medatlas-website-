@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import Seo from '../components/Seo';
-import { Field, FormStatus, useForm } from '../components/Form';
+import { DeliverPanel, Field, FormStatus, useForm } from '../components/Form';
 import { DataList, Label, PageHead } from '../components/ui';
 import { site } from '../data/site';
 import { founders } from '../data/people';
@@ -17,8 +17,9 @@ const subjects = [
 ];
 
 export default function Contact() {
-  const { values, errors, status, set, submit, reset } = useForm({
+  const { values, errors, status, set, submit, reset, buildText } = useForm({
     formName: 'contact',
+    title: 'MedAtlas website enquiry',
     fields: {
       name: { label: 'Full name', required: true },
       email: { label: 'Email address', required: true, type: 'email' },
@@ -95,6 +96,19 @@ export default function Contact() {
                     value: (
                       <a className="tlink" href={`mailto:${site.contact.email}`}>
                         {site.contact.email}
+                      </a>
+                    ),
+                  },
+                  {
+                    label: 'WhatsApp',
+                    value: (
+                      <a
+                        className="tlink"
+                        href={`https://wa.me/${site.delivery.whatsapp}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {site.delivery.whatsappDisplay}
                       </a>
                     ),
                   },
@@ -217,10 +231,18 @@ export default function Contact() {
                   sentMessage="Message received. Someone from MedAtlas will reply within five working days."
                 />
 
-                {status !== 'sent' && (
+                {status === 'ready' && (
+                  <DeliverPanel
+                    text={buildText()}
+                    subject="MedAtlas website enquiry"
+                    onReset={reset}
+                  />
+                )}
+
+                {status !== 'sent' && status !== 'ready' && (
                   <div>
                     <button type="submit" className="btn" disabled={status === 'sending'}>
-                      {status === 'sending' ? 'Sending' : 'Send message'}
+                      {status === 'sending' ? 'Sending' : 'Review and send'}
                     </button>
                     <p className="form__note" style={{ marginTop: '0.7rem' }}>
                       Please do not include patient-identifiable information. See the{' '}

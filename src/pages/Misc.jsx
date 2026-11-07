@@ -4,7 +4,7 @@ import Seo from '../components/Seo';
 import { Chip, CtaBand, Empty, Label, PageHead } from '../components/ui';
 import { conferences, faqs, news, projects, resources } from '../data/content';
 import { findLegal, legalPages } from '../data/legal';
-import { allPeople } from '../data/people';
+import { allPeople, findPerson } from '../data/people';
 import { divisions } from '../data/divisions';
 import { publications } from '../data/publications';
 import { site } from '../data/site';
@@ -80,13 +80,19 @@ export function Conferences() {
                       {c.conference}
                     </span>
                     <p className="form__note" style={{ marginTop: '0.4rem' }}>
-                      {c.location} · {c.year}
+                      {[c.location, c.year, c.reference].filter(Boolean).join(' · ')}
                     </p>
                   </div>
                   <div>
                     <p className="row__desc" style={{ color: 'var(--ink)', fontWeight: 500 }}>
                       {c.abstractTitle}
                     </p>
+                    {c.presenters?.length > 0 && (
+                      <p className="form__note" style={{ marginTop: '0.4rem' }}>
+                        Presenting:{' '}
+                        {c.presenters.map((s) => findPerson(s)?.name || s).join(', ')}
+                      </p>
+                    )}
                     <div className="chips" style={{ marginTop: '0.6rem' }}>
                       <Chip tone="cyan">{c.acceptanceStatus}</Chip>
                       <Chip>{c.presentationType}</Chip>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import Seo from '../components/Seo';
-import { Field, FormStatus, useForm } from '../components/Form';
+import { DeliverPanel, Field, FormStatus, useForm } from '../components/Form';
 import { Label, PageHead } from '../components/ui';
 import { divisions } from '../data/divisions';
 import { faqs } from '../data/content';
@@ -18,8 +18,9 @@ const designations = [
 ];
 
 export default function Join() {
-  const { values, errors, status, file, set, setFileField, submit, reset } = useForm({
+  const { values, errors, status, file, set, setFileField, submit, reset, buildText } = useForm({
     formName: 'membership-application',
+    title: 'MedAtlas membership application',
     fields: {
       name: { label: 'Full name', required: true },
       email: { label: 'Email address', required: true, type: 'email' },
@@ -178,11 +179,20 @@ export default function Join() {
                 .
               </p>
               <p className="form__note mt-sm">
-                Prefer email? Write to{' '}
-                <a className="tlink" href={`mailto:${site.contact.email}`}>
-                  {site.contact.email}
+                Completed applications go to the co-founders on WhatsApp at{' '}
+                <a
+                  className="tlink"
+                  href={`https://wa.me/${site.delivery.whatsapp}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  {site.delivery.whatsappDisplay}
+                </a>{' '}
+                or by email to{' '}
+                <a className="tlink" href={`mailto:${site.delivery.email}`}>
+                  {site.delivery.email}
                 </a>
-                .
+                . You choose which when you send.
               </p>
             </Reveal>
 
@@ -335,10 +345,18 @@ export default function Join() {
                   sentMessage="Application received. You will hear from the co-founders within five working days."
                 />
 
-                {status !== 'sent' && (
+                {status === 'ready' && (
+                  <DeliverPanel
+                    text={buildText()}
+                    subject="MedAtlas membership application"
+                    onReset={reset}
+                  />
+                )}
+
+                {status !== 'sent' && status !== 'ready' && (
                   <div>
                     <button type="submit" className="btn" disabled={status === 'sending'}>
-                      {status === 'sending' ? 'Sending' : 'Send application'}
+                      {status === 'sending' ? 'Sending' : 'Review and send'}
                     </button>
                   </div>
                 )}

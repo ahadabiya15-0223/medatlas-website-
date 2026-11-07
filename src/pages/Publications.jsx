@@ -221,11 +221,6 @@ export function PublicationsIndex() {
             </>
           )}
 
-          <div className="notice mt-md" data-tone="warn">
-            Author lists are still being added to these records, and the two entries marked “status
-            to confirm” named a journal without a link in the source document. Both are editable in{' '}
-            <code>src/data/publications.js</code>.
-          </div>
         </div>
       </section>
 

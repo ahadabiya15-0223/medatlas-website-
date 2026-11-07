@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import Seo from '../components/Seo';
-import { Field, FormStatus, useForm } from '../components/Form';
+import { DeliverPanel, Field, FormStatus, useForm } from '../components/Form';
 import { Label, PageHead } from '../components/ui';
 import { site } from '../data/site';
 
@@ -16,8 +16,9 @@ const partnershipCategories = [
 ];
 
 export default function Partners() {
-  const { values, errors, status, set, submit, reset } = useForm({
+  const { values, errors, status, set, submit, reset, buildText } = useForm({
     formName: 'partnership-enquiry',
+    title: 'MedAtlas partnership enquiry',
     fields: {
       name: { label: 'Name', required: true },
       organisation: { label: 'Organisation', required: true },
@@ -106,9 +107,18 @@ export default function Partners() {
                 the work, we will say so.
               </p>
               <p className="form__note mt-md">
-                Enquiries go to the co-founders at{' '}
-                <a className="tlink" href={`mailto:${site.contact.email}`}>
-                  {site.contact.email}
+                Enquiries reach the co-founders on WhatsApp at{' '}
+                <a
+                  className="tlink"
+                  href={`https://wa.me/${site.delivery.whatsapp}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  {site.delivery.whatsappDisplay}
+                </a>{' '}
+                or by email at{' '}
+                <a className="tlink" href={`mailto:${site.delivery.email}`}>
+                  {site.delivery.email}
                 </a>
                 . {site.contact.responseTime}
               </p>
@@ -216,10 +226,18 @@ export default function Partners() {
                   sentMessage="Enquiry received. One of the co-founders will reply within five working days."
                 />
 
-                {status !== 'sent' && (
+                {status === 'ready' && (
+                  <DeliverPanel
+                    text={buildText()}
+                    subject="MedAtlas partnership enquiry"
+                    onReset={reset}
+                  />
+                )}
+
+                {status !== 'sent' && status !== 'ready' && (
                   <div>
                     <button type="submit" className="btn" disabled={status === 'sending'}>
-                      {status === 'sending' ? 'Sending' : 'Send enquiry'}
+                      {status === 'sending' ? 'Sending' : 'Review and send'}
                     </button>
                   </div>
                 )}

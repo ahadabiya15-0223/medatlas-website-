@@ -49,9 +49,12 @@ export function Portrait({ person }) {
     .join('');
 
   if (person.photo) {
+    const src = person.photo.startsWith('http')
+      ? person.photo
+      : `${import.meta.env.BASE_URL}${person.photo.replace(/^\//, '')}`;
     return (
       <div className="portrait">
-        <img src={person.photo} alt={person.name} loading="lazy" decoding="async" />
+        <img src={src} alt={person.name} loading="lazy" decoding="async" />
       </div>
     );
   }

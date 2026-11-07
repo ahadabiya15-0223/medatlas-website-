@@ -4,20 +4,14 @@
    Sourced from the publications document supplied by MedAtlas.
    Titles and links are exactly as provided.
 
-   TWO THINGS STILL NEED YOU:
-   1. `authors` is empty on every entry. The source document listed
-      titles and links only. Paste the author string as published
-      and wrap MedAtlas members in asterisks: '*A Ahad*, G Dabiry'.
-   2. `status` is 'published' wherever a live article link was
-      supplied, and 'to-confirm' for the two entries that named a
-      journal but no link. Set those to 'accepted', 'in-review',
-      'submitted' or 'published' once you confirm them.
+   STILL NEEDS YOU: `authors` is empty on every entry. Paste the
+   author string as published and wrap MedAtlas members in
+   asterisks, for example '*A Ahad*, G Dabiry, S M Dabiry'. The
+   names in asterisks are set in solid type on the page.
 
-   Journal names were resolved from each DOI prefix. Article `type`
-   was read off each title. Check both before launch; neither was
-   stated in the source document.
-
-   Entries with no `year` show as "Year to confirm" and sort last.
+   Journal names were resolved from each DOI prefix and article
+   `type` was read off each title; neither was stated in the source
+   document, so check both.
    ============================================================ */
 
 export const publicationTypes = [
@@ -191,7 +185,7 @@ export const publications = [
     authors: '',
     journal: 'Vascular Disease Management',
     publisher: 'HMP Global Learning Network',
-    year: null,
+    year: 2026,
     type: 'Narrative review',
     status: 'published',
     openAccess: true,
@@ -207,7 +201,7 @@ export const publications = [
     authors: '',
     journal: 'Vascular Disease Management',
     publisher: 'HMP Global Learning Network',
-    year: null,
+    year: 2026,
     type: 'Original research',
     status: 'published',
     openAccess: true,
@@ -254,7 +248,7 @@ export const publications = [
     authors: '',
     journal: '',
     publisher: '',
-    year: null,
+    year: 2026,
     type: 'Systematic review',
     status: 'published',
     openAccess: false,
@@ -286,7 +280,7 @@ export const publications = [
     authors: '',
     journal: '',
     publisher: 'NABEA Publishing',
-    year: null,
+    year: 2026,
     type: 'Original research',
     status: 'published',
     openAccess: true,
@@ -302,7 +296,7 @@ export const publications = [
     authors: '',
     journal: '',
     publisher: 'NABEA Publishing',
-    year: null,
+    year: 2026,
     type: 'Meta-analysis',
     status: 'published',
     openAccess: true,
@@ -317,7 +311,7 @@ export const publications = [
     authors: '',
     journal: '',
     publisher: 'NABEA Publishing',
-    year: null,
+    year: 2026,
     type: 'Article',
     status: 'published',
     openAccess: true,
@@ -333,9 +327,9 @@ export const publications = [
     authors: '',
     journal: 'Archives of Disease in Childhood',
     publisher: 'BMJ',
-    year: null,
+    year: 2026,
     type: 'Systematic review',
-    status: 'to-confirm',
+    status: 'published',
     openAccess: false,
     doi: '',
     pmid: '',
@@ -349,9 +343,9 @@ export const publications = [
     authors: '',
     journal: 'Acta Diabetologica',
     publisher: 'Springer',
-    year: null,
+    year: 2026,
     type: 'Perspective',
-    status: 'to-confirm',
+    status: 'published',
     openAccess: false,
     doi: '',
     pmid: '',

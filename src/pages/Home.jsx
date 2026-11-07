@@ -64,16 +64,16 @@ export default function Home() {
 
           <div className="hero__strip">
             <div className="hero__stat">
+              <b>{site.networkStats.researchers}</b>
+              <span>Researchers, clinicians and medical students in the network</span>
+            </div>
+            <div className="hero__stat">
+              <b>{site.networkStats.countries}</b>
+              <span>Countries represented across the collective</span>
+            </div>
+            <div className="hero__stat">
               <b>{publications.length}</b>
-              <span>Published and forthcoming outputs listed in the repository</span>
-            </div>
-            <div className="hero__stat">
-              <b>{divisions.length}</b>
-              <span>Research divisions, from cardiovascular medicine to molecular research</span>
-            </div>
-            <div className="hero__stat">
-              <b>{journals}</b>
-              <span>Peer-reviewed journals carrying work from the network</span>
+              <span>Peer-reviewed outputs across {journals} journals</span>
             </div>
           </div>
         </div>
@@ -281,8 +281,9 @@ export default function Home() {
               <h2 style={{ fontSize: 'var(--t-h2)' }}>The people behind the work.</h2>
             </div>
             <p className="lede">
-              MedAtlas was founded by three researchers working across two countries. The network is
-              growing, and the directory is published as each member confirms their profile.
+              MedAtlas was founded by three researchers working across two countries and now spans{' '}
+              {site.networkStats.researchers} members in {site.networkStats.countries} countries.
+              Individual profiles are published as each member confirms their details.
             </p>
           </Reveal>
 

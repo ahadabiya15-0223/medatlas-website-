@@ -4,21 +4,18 @@ import { site } from '../data/site';
 /* ============================================================
    FORMS
    ------------------------------------------------------------
-   Validation runs in the browser. Submission POSTs JSON to
-   site.formEndpoint (set VITE_FORM_ENDPOINT in .env). With no
-   endpoint configured the form runs in preview mode: it
-   validates, logs the payload to the console and reports
-   success, so the interface can be reviewed before a backend
-   exists.
+   Validation runs in the browser. What happens on submit:
 
-   Backend integration notes are in the README.
+   1. If VITE_FORM_ENDPOINT is set, the form POSTs there and
+      reports success. That is the automatic route.
+   2. If it is not set (or the POST fails), the form assembles
+      the answers into a message and offers two one-tap delivery
+      buttons: WhatsApp and email, both going to the addresses in
+      site.delivery. Nothing is lost either way.
+
+   Change the destination number and address in src/data/site.js.
    ============================================================ */
 
-/**
- * One labelled control.
- *   as: 'input' (default) | 'textarea' | 'select' | 'file'
- *   options: array of strings, for select
- */
 export function Field({
   label,
   name,
@@ -80,12 +77,12 @@ export function Field({
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const URLISH = /^(https?:\/\/|www\.)\S+$/i;
 
-export function useForm({ fields, formName }) {
+export function useForm({ fields, formName, title }) {
   const keys = Object.keys(fields);
   const [values, setValues] = useState(Object.fromEntries(keys.map((k) => [k, ''])));
   const [file, setFile] = useState(null);
   const [errors, setErrors] = useState({});
-  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | ready | error
 
   const set = (name) => (e) => {
     setValues((v) => ({ ...v, [name]: e.target.value }));
@@ -112,16 +109,32 @@ export function useForm({ fields, formName }) {
     return Object.keys(next).length === 0;
   };
 
+  /** The answers as a plain-text message, for WhatsApp or email. */
+  const buildText = () => {
+    const lines = Object.entries(fields)
+      .map(([k, rule]) => `${rule.label}: ${(values[k] || '').trim() || '—'}`)
+      .join('\n');
+    const attachment = file ? `\n\nCV attached separately: ${file.name}` : '';
+    return `${title}\n\n${lines}${attachment}`;
+  };
+
   const submit = async (e) => {
     e.preventDefault();
     if (!validate()) {
       document
-        .querySelector('[data-invalid="true"] input, [data-invalid="true"] textarea, [data-invalid="true"] select')
+        .querySelector(
+          '[data-invalid="true"] input, [data-invalid="true"] textarea, [data-invalid="true"] select'
+        )
         ?.focus();
       return;
     }
-    setStatus('sending');
 
+    if (!site.formEndpoint) {
+      setStatus('ready');
+      return;
+    }
+
+    setStatus('sending');
     const payload = {
       form: formName,
       submittedAt: new Date().toISOString(),
@@ -129,18 +142,9 @@ export function useForm({ fields, formName }) {
       ...(file ? { attachment: { name: file.name, size: file.size, type: file.type } } : {}),
     };
 
-    if (!site.formEndpoint) {
-      // eslint-disable-next-line no-console
-      console.info('[MedAtlas] no VITE_FORM_ENDPOINT set. Payload would have been:', payload);
-      await new Promise((r) => setTimeout(r, 650));
-      setStatus('sent');
-      return;
-    }
-
     try {
       let res;
       if (file) {
-        // multipart, so the CV actually reaches the backend
         const body = new FormData();
         Object.entries({ form: formName, ...values }).forEach(([k, v]) => body.append(k, v));
         body.append('cv', file);
@@ -152,9 +156,9 @@ export function useForm({ fields, formName }) {
           body: JSON.stringify(payload),
         });
       }
-      setStatus(res.ok ? 'sent' : 'error');
+      setStatus(res.ok ? 'sent' : 'ready');
     } catch {
-      setStatus('error');
+      setStatus('ready');
     }
   };
 
@@ -165,7 +169,50 @@ export function useForm({ fields, formName }) {
     setStatus('idle');
   };
 
-  return { values, errors, status, file, set, setFileField, submit, reset };
+  return { values, errors, status, file, set, setFileField, submit, reset, buildText, title };
+}
+
+/** WhatsApp and email buttons, pre-filled with the completed form. */
+export function DeliverPanel({ text, subject, onReset }) {
+  const wa = `https://wa.me/${site.delivery.whatsapp}?text=${encodeURIComponent(text)}`;
+  const mail = `mailto:${site.delivery.email}?subject=${encodeURIComponent(
+    subject
+  )}&body=${encodeURIComponent(text)}`;
+
+  return (
+    <div className="notice" role="status">
+      <p style={{ fontWeight: 600, marginBottom: '0.4rem' }}>Your answers are ready to send.</p>
+      <p style={{ marginBottom: '0.9rem' }}>
+        Choose how to send them. Both options open pre-filled, so you only have to press send.
+      </p>
+      <div className="btn-row">
+        <a className="btn btn--cyan" href={wa} target="_blank" rel="noreferrer noopener">
+          Send on WhatsApp
+        </a>
+        <a className="btn" href={mail}>
+          Send by email
+        </a>
+      </div>
+      <p className="form__note" style={{ marginTop: '0.9rem' }}>
+        Goes to {site.delivery.whatsappDisplay} or {site.delivery.email}.{' '}
+        <button
+          type="button"
+          onClick={onReset}
+          style={{
+            background: 'none',
+            border: 0,
+            padding: 0,
+            color: 'var(--cyan-ink)',
+            textDecoration: 'underline',
+            cursor: 'pointer',
+            font: 'inherit',
+          }}
+        >
+          Start again
+        </button>
+      </p>
+    </div>
+  );
 }
 
 export function FormStatus({ status, sentMessage, onReset }) {
@@ -188,14 +235,6 @@ export function FormStatus({ status, sentMessage, onReset }) {
         >
           Send another
         </button>
-      </div>
-    );
-  }
-  if (status === 'error') {
-    return (
-      <div className="notice" data-tone="error" role="alert">
-        That did not reach us. Try again, or write directly to{' '}
-        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
       </div>
     );
   }

@@ -5,6 +5,7 @@ import Seo from '../components/Seo';
 import { CtaBand, Empty, Label, PageHead, PersonCard } from '../components/ui';
 import { allPeople, founders, members } from '../data/people';
 import { divisions } from '../data/divisions';
+import { site } from '../data/site';
 
 export default function Network() {
   const [division, setDivision] = useState('all');
@@ -17,11 +18,6 @@ export default function Network() {
     []
   );
   const roles = useMemo(() => [...new Set(allPeople.map((p) => p.role))].sort(), []);
-  const institutions = useMemo(
-    () => [...new Set(allPeople.map((p) => p.institution))].sort(),
-    []
-  );
-
   const results = useMemo(() => {
     const term = q.trim().toLowerCase();
     return allPeople.filter((p) => {
@@ -64,22 +60,18 @@ export default function Network() {
         <div className="shell">
           <div className="hero__strip" style={{ borderTopColor: 'var(--line)' }}>
             <div className="hero__stat">
-              <b style={{ color: 'var(--ink)' }}>{allPeople.length}</b>
-              <span style={{ color: 'var(--grey)' }}>Researchers with a published profile</span>
+              <b style={{ color: 'var(--ink)' }}>{site.networkStats.researchers}</b>
+              <span style={{ color: 'var(--grey)' }}>Researchers in the network</span>
             </div>
             <div className="hero__stat">
-              <b style={{ color: 'var(--ink)' }}>{countries.length}</b>
+              <b style={{ color: 'var(--ink)' }}>{site.networkStats.countries}</b>
               <span style={{ color: 'var(--grey)' }}>Countries represented</span>
             </div>
             <div className="hero__stat">
-              <b style={{ color: 'var(--ink)' }}>{institutions.length}</b>
+              <b style={{ color: 'var(--ink)' }}>{site.networkStats.institutions}</b>
               <span style={{ color: 'var(--grey)' }}>Institutional affiliations</span>
             </div>
           </div>
-          <p className="form__note mt-sm">
-            These counts are generated from the directory below, not stated separately, so they can
-            never drift out of date.
-          </p>
         </div>
       </section>
 
@@ -197,8 +189,8 @@ export default function Network() {
           ) : (
             <>
               <p className="form__note" style={{ marginBottom: '1rem' }}>
-                Showing {results.length} of {allPeople.length}{' '}
-                {allPeople.length === 1 ? 'researcher' : 'researchers'}.
+                Showing {results.length} of {allPeople.length} published{' '}
+                {allPeople.length === 1 ? 'profile' : 'profiles'}.
               </p>
               <div className="grid grid--4">
                 {results.map((p) => (
@@ -212,13 +204,12 @@ export default function Network() {
             </>
           )}
 
-          {members.length === 0 && (
-            <div className="notice mt-md">
-              The directory currently lists the founding researchers. Member profiles are added as
-              each researcher confirms the details they want published. We do not populate the
-              directory with placeholder entries.
-            </div>
-          )}
+          <div className="notice mt-md">
+            The network has {site.networkStats.researchers} members across{' '}
+            {site.networkStats.countries} countries. Individual profiles are published as each
+            researcher confirms the details they want shown, so the directory above is shorter than
+            the network itself. We do not fill it with placeholder entries.
+          </div>
         </div>
       </section>
 

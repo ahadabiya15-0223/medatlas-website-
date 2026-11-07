@@ -31,7 +31,7 @@ export default function Seo({ title, description, path = '/' }) {
       link.rel = 'canonical';
       document.head.appendChild(link);
     }
-    link.href = `https://medatlas.org${path}`;
+    link.href = `https://medatlas-official-abi.vercel.app${path}`;
   }, [title, description, path]);
 
   return null;

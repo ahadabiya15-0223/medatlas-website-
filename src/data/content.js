@@ -65,7 +65,50 @@ export const projects = [];
      link: '',
    },
    ------------------------------------------------------------ */
-export const conferences = [];
+export const conferences = [
+  {
+    id: 'eapci-2027-udmi-reclassification',
+    conference: 'EuroPCR / EAPCI 2027',
+    organiser: 'European Association of Percutaneous Cardiovascular Interventions, ESC',
+    location: '',
+    year: 2027,
+    abstractTitle:
+      'Fifth universal definition of myocardial infarction: projected fall in infarct diagnoses and rise in coronary angiography and imaging demand',
+    presenters: ['abiya-ahad'],
+    presentationType: 'Moderated poster presentation',
+    acceptanceStatus: 'Accepted',
+    reference: 'Abstract 7118',
+    link: '',
+  },
+  {
+    id: 'eapci-2027-calcified-nodule',
+    conference: 'EuroPCR / EAPCI 2027',
+    organiser: 'European Association of Percutaneous Cardiovascular Interventions, ESC',
+    location: '',
+    year: 2027,
+    abstractTitle:
+      'Failure after PCI of a calcified nodule is device-independent and driven by in-stent nodule recurrence: a systematic review and pooled analysis of 871 lesions',
+    presenters: ['abiya-ahad'],
+    presentationType: 'Poster presentation',
+    acceptanceStatus: 'Accepted',
+    reference: 'Abstract 7114',
+    link: '',
+  },
+  {
+    id: 'eapci-2027-aortic-stenosis-rmst',
+    conference: 'EuroPCR / EAPCI 2027',
+    organiser: 'European Association of Percutaneous Cardiovascular Interventions, ESC',
+    location: '',
+    year: 2027,
+    abstractTitle:
+      'Restricted mean survival time analysis of early intervention versus surveillance in asymptomatic severe aortic stenosis: no demonstrable time-to-benefit within five years',
+    presenters: ['abiya-ahad'],
+    presentationType: 'Moderated poster presentation',
+    acceptanceStatus: 'Accepted',
+    reference: 'Abstract 7082',
+    link: '',
+  },
+];
 
 /* ------------------------------------------------------------
    NEWS AND INSIGHTS  →  /news and /news/<id>
@@ -91,7 +134,26 @@ export const newsCategories = [
   'Collaboration announcement',
 ];
 
-export const news = [];
+export const news = [
+  {
+    id: 'adc-press-release-caffeine-review',
+    headline:
+      'BMJ selects the MedAtlas paediatric caffeine review for a press release',
+    author: 'abiya-ahad',
+    date: '2026-11-08',
+    category: 'Publication announcement',
+    excerpt:
+      'Archives of Disease in Childhood will issue a press release for the network’s systematic review of caffeine and energy drinks in children and young people.',
+    body: [
+      'BMJ has confirmed that the MedAtlas systematic review of caffeine and energy drinks and the cardiovascular system in children and young people has been selected for a press release by Archives of Disease in Childhood.',
+      'BMJ press releases are distributed to thousands of journalists across media platforms internationally. The release is drafted by the BMJ media relations team, approved by the journal editor, and sent to authors for review roughly 24 to 48 hours before it is issued.',
+      'The article will post online when the press release embargo lifts. Because of the number of journals in the BMJ portfolio, selection for a press release can add up to four weeks to the production schedule, so the publication date is not yet fixed.',
+      'Until the embargo lifts we are not discussing the contents of the paper with the media. Any institution wishing to issue its own release will need to coordinate with the BMJ media relations team and respect the embargo date.',
+      'The review is listed in the MedAtlas publication repository and the record will be updated with the DOI and the full citation as soon as the article is live.',
+    ],
+    related: [],
+  },
+];
 
 /* ------------------------------------------------------------
    EDUCATION AND RESEARCH RESOURCES  →  /education and /education/<id>

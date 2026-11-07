@@ -35,10 +35,11 @@ export const founders = [
     orcid: '0009-0008-5767-0722',
     email: 'ahadabiya15@gmail.com',
     phone: '+91 8003735362',
-    showPhone: false,
+    whatsapp: '918003735362',
+    showPhone: true,
     linkedin: '',
     instagram: 'abiya_0223',
-    photo: '',
+    photo: 'people/abiya-ahad.jpg',
     bio: [
       'Abiya Ahad is a co-founder of MedAtlas and works primarily in cardiovascular medicine, with a focus on cardiovascular toxicology, cardio-oncology and the brain–heart axis.',
       'Her published work spans drug-induced cardiac injury, trace element and metallomic contributions to heart failure risk, ferroptosis and mitochondrial mechanisms of cardiomyocyte death, and the cardiovascular consequences of newer oncology agents. A substantial part of her output is evidence synthesis: systematic reviews, scoping reviews and meta-analyses.',
@@ -66,7 +67,7 @@ export const founders = [
     showPhone: false,
     linkedin: '',
     instagram: 'ghezall_01',
-    photo: '',
+    photo: 'people/ghezal-dabiry.jpg',
     bio: [
       'Ghezal Dabiry is a co-founder of MedAtlas, based at Ankara Yıldırım Beyazıt University in Türkiye.',
       'Her research interests sit across neurology and cardiology, with a particular focus on the brain–heart axis and the mechanisms that link cerebral injury to cardiovascular dysfunction.',
@@ -88,7 +89,7 @@ export const founders = [
     showPhone: false,
     linkedin: '',
     instagram: 'dabirysm',
-    photo: '',
+    photo: 'people/sultan-mujib-dabiry.jpg',
     bio: [
       'Sultan Mujib Dabiry is a co-founder of MedAtlas, based at Medical Park Ankara Hospital in Türkiye.',
       'He works across orthopaedics, cardiology and neurology, with a shared interest in the brain–heart axis and in questions that cross the boundary between musculoskeletal and cardiovascular medicine.',
