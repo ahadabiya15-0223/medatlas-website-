@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import Seo from '../components/Seo';
-import { CtaBand, Empty, Label, PageHead } from '../components/ui';
-import { divisions } from '../data/divisions';
+import { CtaBand, Label, PageHead, toneVars } from '../components/ui';
+import { divisionCountWord, divisions } from '../data/divisions';
+import { collaboratorCount, collaborators } from '../data/content';
 import { site } from '../data/site';
 
 const categories = [
@@ -122,47 +123,80 @@ export default function Collaborations() {
         </div>
       </section>
 
-      {/* established vs prospective */}
+      {/* named collaborators */}
       <section className="section">
         <div className="shell">
-          <div className="split">
-            <Reveal>
-              <Label>Established partnerships</Label>
-              <Empty title="No institutional partnerships to declare yet">
-                <p>
-                  MedAtlas has not yet signed a formal institutional partnership. When one is
-                  agreed, the partner institution, the scope of the collaboration and the work
-                  arising from it will be listed here.
-                </p>
-                <p style={{ marginTop: '0.9rem' }}>
-                  We do not list prospective partners as established ones, and we do not display
-                  institutional logos without written authorisation.
-                </p>
-              </Empty>
-            </Reveal>
-
-            <Reveal delay={80}>
-              <Label>Prospective collaboration</Label>
-              <h2 style={{ fontSize: 'var(--t-h3)' }}>
-                We are actively looking for the first institutional partners.
+          <Reveal className="split split--wide">
+            <div>
+              <Label tone="crimson">Our collaborators</Label>
+              <h2 style={{ fontSize: 'var(--t-h2)' }}>
+                {collaboratorCount} researchers working with the network internationally.
               </h2>
-              <p className="lede" style={{ marginTop: '1rem' }}>
-                Across {divisions.length} divisions, the network has capacity for synthesis work
-                and methodological support that most clinical departments cannot staff internally.
-              </p>
-              <p style={{ marginTop: '1rem', color: 'var(--grey)' }}>
-                If you have a question and no team, that is the gap we were built to close. Write
-                to {site.contact.email} or use the enquiry form.
-              </p>
-              <div className="btn-row mt-md">
-                <Link to="/partners" className="btn">
-                  Partnership enquiry
-                </Link>
-                <Link to="/publications" className="btn btn--ghost">
-                  Assess our output first
-                </Link>
-              </div>
-            </Reveal>
+            </div>
+            <p className="lede">
+              These are named researchers who collaborate with MedAtlas on specific pieces of work.
+              Formal institutional partnership agreements are separate, and we will list those here
+              once any are signed.
+            </p>
+          </Reveal>
+
+          <div className="grid grid--2 mt-lg">
+            {collaborators.map((group, i) => (
+              <Reveal key={group.region} delay={i * 50}>
+                <div className="card card--tone" style={toneVars(group.tone)}>
+                  <span className="card__icon" aria-hidden="true">
+                    {group.people.length}
+                  </span>
+                  <h3>{group.region}</h3>
+                  <div className="rows mt-sm" style={{ borderTopColor: 'var(--line-soft)' }}>
+                    {group.people.map((person) => (
+                      <div
+                        key={person.name}
+                        style={{
+                          padding: '0.7rem 0',
+                          borderBottom: '1px solid var(--line-soft)',
+                        }}
+                      >
+                        <p
+                          style={{
+                            fontFamily: 'var(--display)',
+                            fontWeight: 700,
+                            fontSize: '0.95rem',
+                            margin: 0,
+                          }}
+                        >
+                          {person.name}
+                        </p>
+                        <p
+                          style={{
+                            fontSize: 'var(--t-xs)',
+                            color: 'var(--grey)',
+                            margin: '0.15rem 0 0',
+                          }}
+                        >
+                          {person.institution}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="notice mt-md">
+            Institutional partnership agreements are a separate matter. MedAtlas has not yet signed
+            a formal one, and we do not list prospective partners as established ones or display
+            institutional logos without written authorisation.
+          </div>
+
+          <div className="btn-row mt-md">
+            <Link to="/partners" className="btn">
+              Propose a partnership
+            </Link>
+            <Link to="/publications" className="btn btn--ghost">
+              Assess our output first
+            </Link>
           </div>
         </div>
       </section>

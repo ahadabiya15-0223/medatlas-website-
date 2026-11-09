@@ -9,25 +9,28 @@ import {
   Label,
   PageHead,
   PersonCard,
+  ProposeDivisionCard,
   PublicationItem,
+  toneVars,
 } from '../components/ui';
-import { divisions, findDivision } from '../data/divisions';
+import { divisionCountWord, divisions, findDivision } from '../data/divisions';
 import { allPeople, founders } from '../data/people';
 import { publications } from '../data/publications';
-import { projects } from '../data/content';
 import NotFound from './NotFound';
 
 export function DivisionsIndex() {
+  const titleWord = divisionCountWord.charAt(0).toUpperCase() + divisionCountWord.slice(1);
+
   return (
     <>
       <Seo
         title="Research divisions"
         path="/research-divisions"
-        description="The seven MedAtlas research divisions: cardiovascular medicine, neurology and neuroscience, oncology, endocrinology and metabolic medicine, clinical pharmacology, public health and epidemiology, and translational and molecular medicine."
+        description={`The ${divisions.length} MedAtlas research divisions: cardiovascular medicine, neurology and neuroscience, oncology and haematology, endocrinology and metabolic medicine, surgery, clinical pharmacology, public health and epidemiology, and translational and molecular medicine.`}
       />
 
       <PageHead
-        title="Seven divisions, deliberately adjacent."
+        title={`${titleWord} divisions, deliberately adjacent.`}
         lede="Each division has its own objectives and themes, but the structure is designed so that a question can cross between them. The divisions expand as the network grows."
         trail={[{ label: 'Home', to: '/' }, { label: 'Research divisions' }]}
       />
@@ -36,10 +39,13 @@ export function DivisionsIndex() {
         <div className="shell">
           <div className="grid grid--3">
             {divisions.map((d, i) => (
-              <Reveal key={d.id} delay={i * 50}>
+              <Reveal key={d.id} delay={i * 40}>
                 <DivisionCard division={d} />
               </Reveal>
             ))}
+            <Reveal delay={divisions.length * 40}>
+              <ProposeDivisionCard />
+            </Reveal>
           </div>
         </div>
       </section>
@@ -48,7 +54,7 @@ export function DivisionsIndex() {
         <div className="shell">
           <Reveal className="split split--wide">
             <div>
-              <Label>Where the divisions meet</Label>
+              <Label tone="cyan">Where the divisions meet</Label>
               <h2 style={{ fontSize: 'var(--t-h2)' }}>
                 The brain–heart axis runs through most of what we publish.
               </h2>
@@ -61,7 +67,8 @@ export function DivisionsIndex() {
               </p>
               <p style={{ marginTop: '1.1rem', color: 'var(--grey)' }}>
                 Several divisions contribute to that work at once. Cardio-oncology sits the same
-                way, between the oncology and cardiovascular divisions.
+                way, between the oncology and haematology division and the cardiovascular one, and
+                perioperative risk sits between surgery and cardiology.
               </p>
               <div className="btn-row mt-md">
                 <Link to="/publications" className="btn btn--ghost">
@@ -77,7 +84,7 @@ export function DivisionsIndex() {
         <div className="shell">
           <CtaBand
             title="Join a division."
-            body="Tell us which area you want to work in and we will match you to a team in it."
+            body="Tell us which area you want to work in and we will match you to a team in it. If your specialty is not here yet, say so and we will look at opening one."
             primary={{ to: '/join', label: 'Apply to join' }}
             secondary={{ to: '/network', label: 'See who is in the network' }}
           />
@@ -94,11 +101,10 @@ export function DivisionDetail() {
 
   const people = allPeople.filter((p) => p.divisions.includes(division.id));
   const pubs = publications.filter((p) => p.divisions.includes(division.id));
-  const divProjects = projects.filter((p) => p.division === division.id);
   const others = divisions.filter((d) => d.id !== division.id).slice(0, 3);
 
   return (
-    <>
+    <div style={toneVars(division.tone)}>
       <Seo
         title={division.name}
         path={`/research-divisions/${division.id}`}
@@ -119,7 +125,7 @@ export function DivisionDetail() {
         <div className="shell">
           <div className="split split--wide">
             <Reveal>
-              <Label>Division overview</Label>
+              <Label tone={division.tone}>Division overview</Label>
               <p className="lede">{division.overview}</p>
 
               <h2 style={{ fontSize: 'var(--t-h4)', margin: '2rem 0 0.7rem' }}>
@@ -135,10 +141,10 @@ export function DivisionDetail() {
             </Reveal>
 
             <Reveal delay={80}>
-              <Label>Research themes</Label>
+              <Label tone={division.tone}>Research themes</Label>
               <div className="chips">
                 {division.themes.map((t) => (
-                  <Chip key={t} tone="cyan">
+                  <Chip key={t} tone={division.tone}>
                     {t}
                   </Chip>
                 ))}
@@ -163,10 +169,9 @@ export function DivisionDetail() {
         </div>
       </section>
 
-      {/* researchers */}
       <section className="section section--mist">
         <div className="shell">
-          <Label>Researchers in this division</Label>
+          <Label tone={division.tone}>Researchers in this division</Label>
           {people.length > 0 ? (
             <div className="grid grid--4 mt-sm">
               {people.map((p) => (
@@ -193,37 +198,9 @@ export function DivisionDetail() {
         </div>
       </section>
 
-      {/* projects */}
       <section className="section">
         <div className="shell">
-          <Label>Ongoing projects</Label>
-          {divProjects.length > 0 ? (
-            <div className="grid grid--3 mt-sm">
-              {divProjects.map((p) => (
-                <Link key={p.id} className="card" to={`/projects/${p.id}`}>
-                  <div className="chips" style={{ marginBottom: '0.6rem' }}>
-                    <Chip tone="cyan">{p.status}</Chip>
-                  </div>
-                  <h3>{p.title}</h3>
-                  <p>{p.summary}</p>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <Empty title="Project register in preparation">
-              <p>
-                Projects in this division will be listed here with their research question,
-                methodology, registration and team once their protocols are agreed.
-              </p>
-            </Empty>
-          )}
-        </div>
-      </section>
-
-      {/* publications */}
-      <section className="section section--mist">
-        <div className="shell">
-          <Label>Selected publications from this division</Label>
+          <Label tone={division.tone}>Selected publications from this division</Label>
           {pubs.length > 0 ? (
             <>
               <div className="rows mt-sm" style={{ borderTopColor: 'var(--line)' }}>
@@ -247,10 +224,9 @@ export function DivisionDetail() {
         </div>
       </section>
 
-      {/* other divisions */}
-      <section className="section">
+      <section className="section section--mist">
         <div className="shell">
-          <Label>Other divisions</Label>
+          <Label tone={division.tone}>Other divisions</Label>
           <div className="grid grid--3 mt-sm">
             {others.map((d) => (
               <DivisionCard key={d.id} division={d} />
@@ -258,6 +234,6 @@ export function DivisionDetail() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

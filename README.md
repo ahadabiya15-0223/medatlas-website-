@@ -92,7 +92,7 @@ Everything you will change regularly lives in `src/data/`. No component needs ed
 | Founders, leadership, researcher directory | `src/data/people.js` |
 | Research divisions and their themes | `src/data/divisions.js` |
 | Publication repository | `src/data/publications.js` |
-| Projects, conferences, news, education resources, FAQ | `src/data/content.js` |
+| Conferences, news, collaborators, education resources, certificates, FAQ | `src/data/content.js` |
 | Privacy policy, terms, cookies, accessibility statement | `src/data/legal.js` |
 | Colours, typography, spacing | the `:root` block at the top of `src/styles/global.css` |
 | Logo files | `public/brand/` |
@@ -189,11 +189,10 @@ page at `/research-divisions/<id>`.
 | `/network/:slug` | Individual researcher profile |
 | `/research-divisions` | Division index |
 | `/research-divisions/:id` | Division detail (7 pages) |
-| `/projects` | Project register |
-| `/projects/:id` | Project detail |
 | `/publications` | Publication repository |
 | `/publications/:id` | Publication record |
-| `/conferences` | Conferences and presentations |
+| `/conferences` | Conferences, accepted abstracts and the join-the-conference form |
+| `/certificates` | Certificates and training |
 | `/collaborations` | Global collaborations |
 | `/partners` | Partner with us, with enquiry form |
 | `/education` | Research resources |
@@ -375,17 +374,38 @@ not been independently audited, and it does not claim formal WCAG conformance.
 ## 11. What still needs you before launch
 
 1. **Author lists.** Every publication record has an empty `authors` field; the source document
-   listed titles and links only.
-2. **Two publication records** named a journal with no link. They display as "status to confirm"
-   until you set their real status.
-3. **Three records** have no journal name in the source (one PubMed entry, two NABEA
-   publications). Add the journal and year.
-4. **Social links** in `src/data/site.js` are empty, so they are not rendered.
-5. **Founding year** is `null` and no timeline is shown, because none was supplied.
-6. **Legal pages** are drafting templates and carry a visible review notice. Have them checked,
+   listed titles and links only. Wrap MedAtlas members in asterisks to set them in solid type.
+2. **Four records** have no journal name (one PubMed entry, two NABEA publications, one more).
+   Add the journal in `src/data/publications.js`.
+3. **Social links** in `src/data/site.js` are empty, so they are not rendered.
+4. **Founding year** is `null` and no timeline is shown, because none was supplied.
+5. **Legal pages** are drafting templates and carry a visible review notice. Have them checked,
    then set `underReview: false` in `src/data/legal.js`.
-7. **Photographs** for the three co-founders.
-8. **Projects, conferences and news** are empty by design. Add real entries when they exist.
+6. **Certificate files.** The five certificate entries list correctly but have no attached file.
+   Put PDFs or images in `public/certificates/` and set `file` on each entry to show a view link.
+7. **Headline figures** (84 researchers, 19 countries, 29 institutions, 14 journals) are stated
+   in `site.networkStats`, not counted. Keep them current.
 
-Nothing on the site invents a date, a partnership, a credential or a researcher. Where
-information was missing, the page says so.
+## 12. Colour system
+
+Every colour is sampled from the MedAtlas brain mark, which runs warm on the left hemisphere and
+cool on the right. Each research division owns one hue, and that hue colours its card, its page,
+its chips and its section labels.
+
+| Division | Hue |
+| --- | --- |
+| Cardiovascular Medicine | crimson |
+| Neurology and Neuroscience | cyan |
+| Oncology and Haematology | plum |
+| Endocrinology and Metabolic Medicine | amber |
+| Surgery | coral |
+| Clinical Pharmacology and Therapeutics | teal |
+| Public Health and Epidemiology | steel |
+| Translational and Molecular Medicine | rose |
+
+To recolour a division, change its `tone` in `src/data/divisions.js` to any hue defined in the
+`:root` block of `src/styles/global.css`: crimson, coral, amber, gold, cyan, teal, steel, plum or
+rose. Each hue has three values, a bright one for navy backgrounds, an ink one that is readable on
+white, and a pale wash for chip and badge backgrounds.
+
+Adding a new hue means adding those three values to `:root` and a matching `.chip--<name>` rule.

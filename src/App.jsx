@@ -22,12 +22,6 @@ const DivisionsIndex = lazy(() =>
 const DivisionDetail = lazy(() =>
   import('./pages/Divisions').then((m) => ({ default: m.DivisionDetail }))
 );
-const ProjectsIndex = lazy(() =>
-  import('./pages/Projects').then((m) => ({ default: m.ProjectsIndex }))
-);
-const ProjectDetail = lazy(() =>
-  import('./pages/Projects').then((m) => ({ default: m.ProjectDetail }))
-);
 const PublicationsIndex = lazy(() =>
   import('./pages/Publications').then((m) => ({ default: m.PublicationsIndex }))
 );
@@ -43,6 +37,7 @@ const ResourceDetail = lazy(() =>
 const NewsIndex = lazy(() => import('./pages/News').then((m) => ({ default: m.NewsIndex })));
 const NewsArticle = lazy(() => import('./pages/News').then((m) => ({ default: m.NewsArticle })));
 const Conferences = lazy(() => import('./pages/Misc').then((m) => ({ default: m.Conferences })));
+const Certificates = lazy(() => import('./pages/Misc').then((m) => ({ default: m.Certificates })));
 const Faq = lazy(() => import('./pages/Misc').then((m) => ({ default: m.Faq })));
 const LegalPage = lazy(() => import('./pages/Misc').then((m) => ({ default: m.LegalPage })));
 const Search = lazy(() => import('./pages/Misc').then((m) => ({ default: m.Search })));
@@ -88,9 +83,6 @@ export default function App() {
             <Route path="/research-divisions" element={<DivisionsIndex />} />
             <Route path="/research-divisions/:id" element={<DivisionDetail />} />
 
-            <Route path="/projects" element={<ProjectsIndex />} />
-            <Route path="/projects/:id" element={<ProjectDetail />} />
-
             <Route path="/publications" element={<PublicationsIndex />} />
             <Route path="/publications/:id" element={<PublicationDetail />} />
 
@@ -101,6 +93,7 @@ export default function App() {
             <Route path="/news/:id" element={<NewsArticle />} />
 
             <Route path="/conferences" element={<Conferences />} />
+            <Route path="/certificates" element={<Certificates />} />
             <Route path="/collaborations" element={<Collaborations />} />
             <Route path="/partners" element={<Partners />} />
             <Route path="/join" element={<Join />} />

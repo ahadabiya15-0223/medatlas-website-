@@ -33,7 +33,6 @@ export default function Join() {
       experience: { label: 'Research experience', required: false },
       publications: { label: 'Previous publications', required: false },
       profile: { label: 'Professional profile link', required: false },
-      motivation: { label: 'Motivation statement', required: true, min: 60 },
     },
   });
 
@@ -326,17 +325,6 @@ export default function Join() {
                       ? `Attached: ${file.name}`
                       : 'Optional. PDF or Word, up to about 5 MB.'
                   }
-                />
-
-                <Field
-                  label="Motivation statement"
-                  name="motivation"
-                  as="textarea"
-                  required
-                  hint="Why you want to join, what you want to work on, and how much time you can give each week."
-                  value={values.motivation}
-                  onChange={set('motivation')}
-                  error={errors.motivation}
                 />
 
                 <FormStatus

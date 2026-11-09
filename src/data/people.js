@@ -25,7 +25,7 @@ export const founders = [
     role: 'Co-Founder',
     country: 'India',
     institution: 'Ananta Institute of Medical Sciences and Research Centre',
-    divisions: ['cardiovascular-medicine', 'oncology', 'neurology'],
+    divisions: ['cardiovascular-medicine', 'oncology-haematology', 'neurology'],
     interests: [
       'Cardiovascular toxicology',
       'Cardio-oncology',

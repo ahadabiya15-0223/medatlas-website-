@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Seo from '../components/Seo';
-import { Chip, CtaBand, Empty, Label, PageHead } from '../components/ui';
+import { Chip, CtaBand, Empty, Label, PageHead, toneVars } from '../components/ui';
 import { news, newsCategories } from '../data/content';
 import { findPerson } from '../data/people';
 import NotFound from './NotFound';
@@ -89,9 +89,15 @@ export function NewsIndex() {
 
               <div className="grid grid--3">
                 {results.map((a) => (
-                  <Link key={a.id} className="card" to={`/news/${a.id}`}>
+                  <Link
+                    key={a.id}
+                    className="card card--tone"
+                    to={`/news/${a.id}`}
+                    style={toneVars(a.tone || 'cyan')}
+                  >
                     <div className="chips" style={{ marginBottom: '0.7rem' }}>
-                      <Chip tone="cyan">{a.category}</Chip>
+                      <Chip tone={a.tone || 'cyan'}>{a.category}</Chip>
+                      {a.video && <Chip>Video</Chip>}
                     </div>
                     <h3>{a.headline}</h3>
                     <p>{a.excerpt}</p>
@@ -154,6 +160,28 @@ export function NewsArticle() {
 
       <section className="section">
         <div className="shell shell--narrow">
+          {article.video && (
+            <div className="videoframe" style={{ marginBottom: '2rem' }}>
+              <video
+                controls
+                playsInline
+                preload="metadata"
+                poster={`${import.meta.env.BASE_URL}${article.video.poster}`}
+              >
+                <source
+                  src={`${import.meta.env.BASE_URL}${article.video.src}`}
+                  type="video/mp4"
+                />
+                Your browser cannot play this video.
+              </video>
+            </div>
+          )}
+          {article.video?.caption && (
+            <p className="form__note" style={{ marginBottom: '2rem' }}>
+              {article.video.caption}
+            </p>
+          )}
+
           <article className="prose">
             {article.body.map((p) => (
               <p key={p.slice(0, 30)}>{p}</p>

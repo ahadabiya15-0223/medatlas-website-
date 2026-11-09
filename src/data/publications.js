@@ -48,7 +48,7 @@ export const publications = [
     doi: '10.1186/s40959-026-00603-x',
     pmid: '',
     url: 'https://link.springer.com/article/10.1186/s40959-026-00603-x',
-    divisions: ['oncology', 'cardiovascular-medicine'],
+    divisions: ['oncology-haematology', 'cardiovascular-medicine'],
   },
   {
     id: 'stroke-heart-syndrome',
@@ -96,7 +96,7 @@ export const publications = [
     doi: '10.1186/s40959-026-00579-8',
     pmid: '',
     url: 'https://link.springer.com/article/10.1186/s40959-026-00579-8',
-    divisions: ['oncology', 'cardiovascular-medicine'],
+    divisions: ['oncology-haematology', 'cardiovascular-medicine'],
   },
   {
     id: 'cfac-ferroptosis',
@@ -255,7 +255,7 @@ export const publications = [
     doi: '',
     pmid: '41166511',
     url: 'https://pubmed.ncbi.nlm.nih.gov/41166511/',
-    divisions: ['neurology', 'oncology', 'cardiovascular-medicine'],
+    divisions: ['neurology', 'oncology-haematology', 'cardiovascular-medicine'],
   },
   {
     id: 'estrogen-insulin-resistance',
@@ -271,7 +271,7 @@ export const publications = [
     doi: '',
     pmid: '',
     url: 'https://www.ijhsr.org/IJHSR_Vol.14_Issue.11_Nov2024/IJHSR10.pdf',
-    divisions: ['endocrinology', 'oncology'],
+    divisions: ['endocrinology', 'oncology-haematology'],
   },
   {
     id: 'chrysin-gold-chitosan',
@@ -287,7 +287,7 @@ export const publications = [
     doi: '',
     pmid: '',
     url: 'https://tpb.nabea.pub/tpb/article/view/3',
-    divisions: ['oncology', 'translational-medicine'],
+    divisions: ['oncology-haematology', 'translational-medicine'],
   },
   {
     id: 'doac-vte-obesity',

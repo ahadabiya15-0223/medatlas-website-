@@ -1,11 +1,28 @@
 import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
 import { NetworkField } from './Brand';
-import { divisionName } from '../data/divisions';
+import { divisionName, divisionTone } from '../data/divisions';
 import { publicationStatus } from '../data/publications';
 
-export function Label({ children }) {
-  return <p className="label">{children}</p>;
+/** Inline style that rebinds the accent tokens to one hue. */
+export const toneVars = (tone) =>
+  tone
+    ? {
+        '--tone': `var(--${tone})`,
+        '--tone-ink': `var(--${tone}-ink)`,
+        '--tone-wash': `var(--${tone}-wash)`,
+        '--accent': `var(--${tone})`,
+        '--accent-ink': `var(--${tone}-ink)`,
+        '--accent-wash': `var(--${tone}-wash)`,
+      }
+    : undefined;
+
+export function Label({ tone, children }) {
+  return (
+    <p className="label" style={toneVars(tone)}>
+      {children}
+    </p>
+  );
 }
 
 export function Chip({ tone = '', children }) {
@@ -28,7 +45,7 @@ export function Crumbs({ trail }) {
 export function PageHead({ title, lede, trail, children }) {
   return (
     <section className="pagehead">
-      <NetworkField className="pagehead__net" seed={title.length + 3} nodes={28} />
+      <NetworkField className="pagehead__net" seed={title.length + 3} nodes={30} />
       <div className="shell">
         {trail && <Crumbs trail={trail} />}
         <h1>{title}</h1>
@@ -39,7 +56,6 @@ export function PageHead({ title, lede, trail, children }) {
   );
 }
 
-/** Monogram over the brand field when a person has no photograph. */
 export function Portrait({ person }) {
   const initials = person.name
     .split(' ')
@@ -70,8 +86,9 @@ export function Portrait({ person }) {
 }
 
 export function PersonCard({ person, base = '/network' }) {
+  const tone = divisionTone(person.divisions?.[0]);
   return (
-    <Link className="person" to={`${base}/${person.slug}`}>
+    <Link className="person" to={`${base}/${person.slug}`} style={toneVars(tone)}>
       <Portrait person={person} />
       <div className="person__body">
         <h3 className="person__name">
@@ -110,7 +127,7 @@ export function PublicationItem({ pub }) {
         {pub.authors && <p className="pub__journal">{pub.authors}</p>}
         <p className="pub__journal">
           {pub.journal ? <em>{pub.journal}</em> : <em>Journal to confirm</em>}
-          {pub.year ? `, ${pub.year}` : ', year to confirm'}
+          {pub.year ? `, ${pub.year}` : ''}
           {pub.publisher ? `. ${pub.publisher}.` : '.'}
         </p>
         <div className="pub__links">
@@ -132,13 +149,13 @@ export function PublicationItem({ pub }) {
               Full text
             </a>
           )}
-          {pub.pmid && (
-            <span className="form__note">PMID {pub.pmid}</span>
-          )}
+          {pub.pmid && <span className="form__note">PMID {pub.pmid}</span>}
         </div>
         <div className="chips" style={{ marginTop: '0.6rem' }}>
           {pub.divisions.map((d) => (
-            <Chip key={d}>{divisionName(d)}</Chip>
+            <Chip key={d} tone={divisionTone(d)}>
+              {divisionName(d)}
+            </Chip>
           ))}
         </div>
       </div>
@@ -149,14 +166,36 @@ export function PublicationItem({ pub }) {
 export function DivisionCard({ division }) {
   return (
     <Link
-      className="card divcard"
+      className="card card--tone"
       to={`/research-divisions/${division.id}`}
-      style={{ '--spine': `var(${division.accent})` }}
+      style={toneVars(division.tone)}
     >
+      <span className="card__icon" aria-hidden="true">
+        {division.initials}
+      </span>
       <h3>{division.name}</h3>
       <p>{division.short}</p>
       <div className="card__foot">
         <span className="tlink">Explore division</span>
+      </div>
+    </Link>
+  );
+}
+
+/** The open invitation card that closes the divisions grid. */
+export function ProposeDivisionCard() {
+  return (
+    <Link className="card card--tone" to="/contact" style={toneVars('gold')}>
+      <span className="card__icon" aria-hidden="true">
+        +
+      </span>
+      <h3>Another specialty?</h3>
+      <p>
+        If your field is not listed, tell us what you work on. Where there is a real question and
+        someone to lead it, we will open a division for it.
+      </p>
+      <div className="card__foot">
+        <span className="tlink">Contact us and we will try to make it happen</span>
       </div>
     </Link>
   );
@@ -174,7 +213,7 @@ export function Empty({ title, children }) {
 export function CtaBand({ title, body, primary, secondary }) {
   return (
     <Reveal className="band">
-      <NetworkField className="band__net" seed={title.length * 2} nodes={30} />
+      <NetworkField className="band__net" seed={title.length * 2} nodes={32} />
       <h2>{title}</h2>
       <p>{body}</p>
       <div className="btn-row mt-md">
@@ -203,5 +242,21 @@ export function DataList({ rows }) {
           </div>
         ))}
     </dl>
+  );
+}
+
+/** A numbered sequence. Only for content that really is ordered. */
+export function Steps({ items, tone }) {
+  return (
+    <div className="steps" style={toneVars(tone)}>
+      {items.map(([h, p]) => (
+        <div className="step" key={h}>
+          <div>
+            <h3>{h}</h3>
+          </div>
+          <p>{p}</p>
+        </div>
+      ))}
+    </div>
   );
 }

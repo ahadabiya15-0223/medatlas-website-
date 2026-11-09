@@ -1,6 +1,6 @@
 /* ============================================================
    SITE CONFIGURATION
-   Organisation identity, navigation, contact details.
+   Organisation identity, navigation, headline figures, contact.
    Edit here and it changes across every page.
    ============================================================ */
 
@@ -13,7 +13,7 @@ export const site = {
   foundedYear: null,
 
   mission:
-    'MedAtlas is an international medical research collective connecting medical students, clinicians, academics and researchers across geographical and institutional boundaries.',
+    'MedAtlas is an international medical research collective of doctors, medical students, clinicians, academics and researchers, working together across institutional and geographical boundaries.',
 
   purpose:
     'We exist to facilitate scientific collaboration, encourage interdisciplinary research, advance evidence-based medicine and contribute to the global medical literature.',
@@ -24,21 +24,22 @@ export const site = {
     responseTime: 'We aim to answer every enquiry within five working days.',
   },
 
-  /* Where completed forms are delivered. The WhatsApp number is digits
-     only, with country code and no plus sign or spaces. */
+  /* Where completed forms are delivered. WhatsApp is digits only,
+     country code first, no plus sign and no spaces. */
   delivery: {
     email: 'medatlas1521@gmail.com',
     whatsapp: '918003735362',
     whatsappDisplay: '+91 8003735362',
   },
 
-  /* Headline network figures. These are stated by MedAtlas rather than
-     counted from the directory below, because most members have not yet
-     published a profile page. Keep them current. */
+  /* Headline figures. Stated by MedAtlas rather than counted from the
+     data below, because most members have not yet published a profile
+     and some publication records are still being completed. */
   networkStats: {
     researchers: 84,
     countries: 19,
     institutions: 29,
+    journals: 14,
   },
 
   social: [
@@ -47,14 +48,11 @@ export const site = {
     { label: 'ResearchGate', href: '', note: 'Add the MedAtlas profile URL' },
   ],
 
-  /* POST target for every form on the site. Set VITE_FORM_ENDPOINT in .env
-     (Formspree, a Vercel function, your own API). Empty means preview mode:
-     forms validate, log the payload and confirm, but send nothing. */
+  /* POST target for every form. Set VITE_FORM_ENDPOINT in .env to send
+     automatically; otherwise forms hand over to WhatsApp or email. */
   formEndpoint: import.meta.env.VITE_FORM_ENDPOINT || '',
 };
 
-/* Primary navigation. `children` renders a dropdown on desktop and a
-   grouped section in the mobile drawer. */
 export const nav = [
   { label: 'Home', to: '/' },
   {
@@ -70,9 +68,9 @@ export const nav = [
     label: 'Research',
     to: '/research-divisions',
     children: [
-      { label: 'Research divisions', to: '/research-divisions', note: 'Seven areas of work' },
-      { label: 'Research projects', to: '/projects', note: 'Ongoing, completed and planned' },
+      { label: 'Research divisions', to: '/research-divisions', note: 'Our areas of work' },
       { label: 'Education and resources', to: '/education', note: 'Methodology and research skills' },
+      { label: 'Certificates', to: '/certificates', note: 'Training and credentials' },
     ],
   },
   { label: 'Publications', to: '/publications' },
@@ -81,9 +79,9 @@ export const nav = [
     label: 'Collaborate',
     to: '/collaborations',
     children: [
-      { label: 'Global collaborations', to: '/collaborations', note: 'How we work with others' },
+      { label: 'Global collaborations', to: '/collaborations', note: 'Our international collaborators' },
       { label: 'Partner with us', to: '/partners', note: 'For institutions and organisations' },
-      { label: 'Conferences', to: '/conferences', note: 'Abstracts and presentations' },
+      { label: 'Conferences', to: '/conferences', note: 'Abstracts, presentations and how to join' },
     ],
   },
   { label: 'News', to: '/news' },
@@ -97,39 +95,45 @@ export const legalNav = [
   { label: 'Accessibility', to: '/accessibility' },
 ];
 
-/* Values and objectives. Written from the brief, not invented credentials. */
+/* Core values. `tone` picks a hue from the brain spectrum. */
 export const values = [
   {
     title: 'Scientific integrity first',
+    tone: 'crimson',
     body: 'Protocols before results. Methods are agreed and registered in advance, limitations are stated plainly, and nothing is reported as more certain than the evidence allows.',
   },
   {
     title: 'Collaboration without borders',
+    tone: 'cyan',
     body: 'Where a researcher is based should not determine whether they can contribute. The network is built so that a student in one country and a clinician in another can work on the same manuscript.',
   },
   {
     title: 'Interdisciplinary by design',
+    tone: 'amber',
     body: 'The questions we find most interesting sit between specialties. Cardiology meets neurology, oncology meets pharmacology, and the divisions are structured to make those crossings easy.',
   },
   {
     title: 'Credit where it is earned',
+    tone: 'plum',
     body: 'Authorship follows contribution. Roles are agreed at the start of a project and recorded against recognised contributorship criteria.',
   },
   {
     title: 'Open to early-career researchers',
+    tone: 'teal',
     body: 'Medical students and junior doctors work alongside experienced academics on real projects. Supervision is structured; credit is not reserved for seniority.',
   },
   {
     title: 'Transparency about what we are',
+    tone: 'steel',
     body: 'We publish what is verified and label what is not. No invented partnerships, no borrowed institutional authority, no claims the record does not support.',
   },
 ];
 
 export const objectives = [
-  'Build an international, interdisciplinary research community spanning medical students, clinicians and academics.',
+  'Build an international, interdisciplinary research community spanning medical students, doctors, clinicians and academics.',
   'Produce rigorous evidence synthesis: systematic reviews, meta-analyses and scoping reviews that meet current reporting standards.',
   'Support original and translational research across the network’s divisions.',
   'Give early-career researchers supervised, substantive roles on publishable work.',
-  'Develop and share research methodology resources openly.',
+  'Develop and share research methodology resources, modules and courses openly.',
   'Establish durable academic relationships with universities, hospitals and research groups internationally.',
 ];

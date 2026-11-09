@@ -1,76 +1,20 @@
 /* ============================================================
-   REMAINING CONTENT COLLECTIONS
-   Projects, conferences, news, education resources, FAQ.
-
-   Projects, conferences and news ship EMPTY on purpose: nothing
-   verified was supplied for them, and the site shows a designed
-   empty state rather than invented entries. Each array below has
-   a filled-in template in a comment. Uncomment, edit, done.
+   CONTENT COLLECTIONS
+   Conferences, news, education resources, certificates,
+   collaborators and the FAQ.
    ============================================================ */
 
 /* ------------------------------------------------------------
-   RESEARCH PROJECTS  →  /projects and /projects/<id>
-
-   {
-     id: 'project-slug',
-     title: 'Project title',
-     division: 'cardiovascular-medicine',
-     category: 'Systematic review',      // see projectCategories
-     status: 'Ongoing',                  // see projectStatuses
-     summary: 'One or two sentences for the card.',
-     background: 'Why this question matters.',
-     question: 'The research question in one sentence.',
-     objectives: ['Objective one', 'Objective two'],
-     methodology: 'Search strategy, screening, extraction, appraisal.',
-     design: 'PRISMA-compliant systematic review',
-     registration: 'PROSPERO CRD4202XXXXXXX',
-     team: ['abiya-ahad'],              // slugs from people.js
-     collaborators: [],                 // only verified ones
-     publications: [],                  // ids from publications.js
-   },
-   ------------------------------------------------------------ */
-export const projectCategories = [
-  'Systematic review',
-  'Meta-analysis',
-  'Scoping review',
-  'Original research',
-  'Translational research',
-  'Collaborative research',
-];
-
-export const projectStatuses = [
-  'Planned',
-  'Protocol registered',
-  'Ongoing',
-  'In analysis',
-  'Under review',
-  'Completed',
-];
-
-export const projects = [];
-
-/* ------------------------------------------------------------
    CONFERENCES  →  /conferences
-
-   {
-     id: 'conference-slug',
-     conference: 'Conference name',
-     organiser: 'Organising society',
-     location: 'City, Country',
-     year: 2027,
-     abstractTitle: 'Abstract title',
-     presenters: ['abiya-ahad'],
-     presentationType: 'Oral presentation',   // or Poster presentation
-     acceptanceStatus: 'Accepted',            // Accepted / Submitted / Presented
-     link: '',
-   },
+   Add an object per accepted abstract or presentation.
    ------------------------------------------------------------ */
 export const conferences = [
   {
     id: 'eapci-2027-udmi-reclassification',
-    conference: 'EuroPCR / EAPCI 2027',
+    conference: 'EAPCI 2027',
     organiser: 'European Association of Percutaneous Cardiovascular Interventions, ESC',
-    location: '',
+    location: 'Milan, Italy',
+    dates: '18–20 February 2027',
     year: 2027,
     abstractTitle:
       'Fifth universal definition of myocardial infarction: projected fall in infarct diagnoses and rise in coronary angiography and imaging demand',
@@ -82,9 +26,10 @@ export const conferences = [
   },
   {
     id: 'eapci-2027-calcified-nodule',
-    conference: 'EuroPCR / EAPCI 2027',
+    conference: 'EAPCI 2027',
     organiser: 'European Association of Percutaneous Cardiovascular Interventions, ESC',
-    location: '',
+    location: 'Milan, Italy',
+    dates: '18–20 February 2027',
     year: 2027,
     abstractTitle:
       'Failure after PCI of a calcified nodule is device-independent and driven by in-stent nodule recurrence: a systematic review and pooled analysis of 871 lesions',
@@ -96,9 +41,10 @@ export const conferences = [
   },
   {
     id: 'eapci-2027-aortic-stenosis-rmst',
-    conference: 'EuroPCR / EAPCI 2027',
+    conference: 'EAPCI 2027',
     organiser: 'European Association of Percutaneous Cardiovascular Interventions, ESC',
-    location: '',
+    location: 'Milan, Italy',
+    dates: '18–20 February 2027',
     year: 2027,
     abstractTitle:
       'Restricted mean survival time analysis of early intervention versus surveillance in asymptomatic severe aortic stenosis: no demonstrable time-to-benefit within five years',
@@ -113,16 +59,8 @@ export const conferences = [
 /* ------------------------------------------------------------
    NEWS AND INSIGHTS  →  /news and /news/<id>
 
-   {
-     id: 'article-slug',
-     headline: 'Headline',
-     author: 'abiya-ahad',          // slug, or a plain name string
-     date: '2026-11-07',
-     category: 'Publication announcement',
-     excerpt: 'One or two sentences.',
-     body: ['Paragraph one.', 'Paragraph two.'],
-     related: [],                   // other article ids
-   },
+   `video` is optional. Put the file in public/media/ and give the
+   path relative to the site root, plus a poster image.
    ------------------------------------------------------------ */
 export const newsCategories = [
   'Announcement',
@@ -136,12 +74,34 @@ export const newsCategories = [
 
 export const news = [
   {
+    id: 'eapci-2027-three-abstracts-accepted',
+    headline: 'Three MedAtlas abstracts accepted at EAPCI 2027 in Milan',
+    author: 'abiya-ahad',
+    date: '2026-11-09',
+    category: 'Conference update',
+    tone: 'crimson',
+    excerpt:
+      'All three abstracts submitted to the European Association of Percutaneous Cardiovascular Interventions have been accepted for presentation in Milan this February.',
+    video: {
+      src: 'media/eapci-2027-announcement.mp4',
+      poster: 'media/eapci-2027-poster.jpg',
+      caption: 'The MedAtlas announcement reel.',
+    },
+    body: [
+      'Three MedAtlas abstracts have been accepted for presentation at EAPCI 2027, the congress of the European Association of Percutaneous Cardiovascular Interventions, held in Milan from 18 to 20 February 2027.',
+      'Two were accepted as moderated poster presentations: a projection of how the Fifth Universal Definition of Myocardial Infarction will change infarct diagnosis rates and downstream demand for coronary angiography and imaging, and a restricted mean survival time analysis of early intervention versus surveillance in asymptomatic severe aortic stenosis, which found no demonstrable time-to-benefit within five years.',
+      'The third, accepted as a poster, is a systematic review and pooled analysis of 871 lesions showing that failure after percutaneous coronary intervention of a calcified nodule is device-independent and driven by in-stent nodule recurrence.',
+      'All three will be presented by Abiya Ahad. Full abstract records are listed on the conferences page, and members who would like to attend or help present can register their interest there.',
+    ],
+    related: ['adc-press-release-caffeine-review'],
+  },
+  {
     id: 'adc-press-release-caffeine-review',
-    headline:
-      'BMJ selects the MedAtlas paediatric caffeine review for a press release',
+    headline: 'BMJ selects the MedAtlas paediatric caffeine review for a press release',
     author: 'abiya-ahad',
     date: '2026-11-08',
     category: 'Publication announcement',
+    tone: 'amber',
     excerpt:
       'Archives of Disease in Childhood will issue a press release for the network’s systematic review of caffeine and energy drinks in children and young people.',
     body: [
@@ -151,22 +111,66 @@ export const news = [
       'Until the embargo lifts we are not discussing the contents of the paper with the media. Any institution wishing to issue its own release will need to coordinate with the BMJ media relations team and respect the embargo date.',
       'The review is listed in the MedAtlas publication repository and the record will be updated with the DOI and the full citation as soon as the article is live.',
     ],
-    related: [],
+    related: ['eapci-2027-three-abstracts-accepted'],
   },
 ];
 
 /* ------------------------------------------------------------
-   EDUCATION AND RESEARCH RESOURCES  →  /education and /education/<id>
+   INTERNATIONAL COLLABORATORS  →  /collaborations
 
-   `status` is 'available' or 'in-preparation'. Resources marked
-   in-preparation show their outline and say so plainly rather
-   than pretending to be finished guides.
+   Researchers outside MedAtlas who the network works with.
+   Add a name, their institution and the country.
+   ------------------------------------------------------------ */
+export const collaborators = [
+  {
+    region: 'Brazil',
+    tone: 'amber',
+    people: [
+      { name: 'Pedro Ian Gualberto', institution: 'Federal University of Juiz de Fora' },
+      { name: 'Luis F Deresz', institution: 'Federal University of Juiz de Fora' },
+      { name: 'Gustavo Waclawovsky', institution: 'Instituto de Cardiologia de Porto Alegre' },
+    ],
+  },
+  {
+    region: 'Germany',
+    tone: 'crimson',
+    people: [
+      { name: 'Ute Seeland', institution: 'University of Magdeburg' },
+      { name: 'Felix Oberhoffer', institution: 'LMU Munich' },
+      { name: 'Nikolaus A Haas', institution: 'LMU Munich' },
+      { name: 'Meike Schrader', institution: 'LMU Munich' },
+    ],
+  },
+  {
+    region: 'Sweden and Australia',
+    tone: 'cyan',
+    people: [
+      {
+        name: 'Martin Ugander',
+        institution: 'Karolinska Institutet and the University of Sydney',
+      },
+    ],
+  },
+  {
+    region: 'Italy',
+    tone: 'teal',
+    people: [
+      { name: 'Pierfrancesco Siena', institution: 'SISSA, Trieste' },
+      { name: 'Gianluigi Rozza', institution: 'SISSA, Trieste' },
+    ],
+  },
+];
+
+export const collaboratorCount = collaborators.reduce((n, g) => n + g.people.length, 0);
+
+/* ------------------------------------------------------------
+   EDUCATION AND RESEARCH RESOURCES  →  /education
    ------------------------------------------------------------ */
 export const resources = [
   {
     id: 'research-methodology',
     title: 'Research methodology',
-    status: 'in-preparation',
+    tone: 'crimson',
     summary:
       'How a question becomes a protocol: framing, feasibility, choosing a study design, and deciding what would count as an answer.',
     outline: [
@@ -179,7 +183,7 @@ export const resources = [
   {
     id: 'systematic-review-methodology',
     title: 'Systematic review methodology',
-    status: 'in-preparation',
+    tone: 'cyan',
     summary:
       'The full sequence: protocol registration, search architecture, screening, extraction, risk of bias and reporting against PRISMA.',
     outline: [
@@ -194,7 +198,7 @@ export const resources = [
   {
     id: 'meta-analysis',
     title: 'Meta-analysis',
-    status: 'in-preparation',
+    tone: 'amber',
     summary:
       'When pooling is justified, which model to use, how to read heterogeneity honestly, and what subgroup analysis can and cannot tell you.',
     outline: [
@@ -208,7 +212,7 @@ export const resources = [
   {
     id: 'statistical-analysis',
     title: 'Statistical analysis',
-    status: 'in-preparation',
+    tone: 'plum',
     summary:
       'Applied statistics for clinical research: effect measures, confidence intervals, model choice and the errors that reach print most often.',
     outline: [
@@ -221,7 +225,7 @@ export const resources = [
   {
     id: 'biostatistics',
     title: 'Biostatistics',
-    status: 'in-preparation',
+    tone: 'teal',
     summary:
       'The statistical foundations the rest of the network depends on, taught from examples in the published literature.',
     outline: [
@@ -234,9 +238,8 @@ export const resources = [
   {
     id: 'epidemiology',
     title: 'Epidemiology',
-    status: 'in-preparation',
-    summary:
-      'Study designs, bias, confounding and causal reasoning in observational research.',
+    tone: 'steel',
+    summary: 'Study designs, bias, confounding and causal reasoning in observational research.',
     outline: [
       'Cohort, case-control and cross-sectional designs',
       'Selection bias, information bias and confounding',
@@ -247,7 +250,7 @@ export const resources = [
   {
     id: 'scientific-writing',
     title: 'Scientific writing',
-    status: 'in-preparation',
+    tone: 'coral',
     summary:
       'Writing a manuscript a reviewer can follow: structure, argument, figures, and the common reasons papers are rejected before review.',
     outline: [
@@ -260,7 +263,7 @@ export const resources = [
   {
     id: 'publication-ethics',
     title: 'Publication ethics',
-    status: 'in-preparation',
+    tone: 'rose',
     summary:
       'Authorship criteria, contributorship, conflicts of interest, duplicate submission and predatory publishing.',
     outline: [
@@ -273,7 +276,7 @@ export const resources = [
   {
     id: 'literature-searching',
     title: 'Literature searching',
-    status: 'in-preparation',
+    tone: 'cyan',
     summary:
       'Database selection, controlled vocabulary, search string construction and documenting a search so someone else can rerun it.',
     outline: [
@@ -287,7 +290,7 @@ export const resources = [
   {
     id: 'research-software',
     title: 'Research software and tools',
-    status: 'in-preparation',
+    tone: 'amber',
     summary:
       'The software the network uses day to day for screening, extraction, analysis and reference management.',
     outline: [
@@ -300,7 +303,7 @@ export const resources = [
   {
     id: 'evidence-based-medicine',
     title: 'Evidence-based medicine',
-    status: 'in-preparation',
+    tone: 'crimson',
     summary:
       'Appraising evidence and grading certainty, including GRADE and how to apply it without reducing it to a checklist.',
     outline: [
@@ -315,6 +318,382 @@ export const resources = [
 export const findResource = (id) => resources.find((r) => r.id === id);
 
 /* ------------------------------------------------------------
+   CERTIFICATES  →  /certificates
+
+   Training, courses and credentials held by members.
+
+   HOW TO ADD ONE
+   • Append an object below.
+   • `holder` is a person's slug from people.js, or a plain name.
+   • `file` is the image in public/certificates/. Leave it empty and
+     the entry still lists, just without the image and view link.
+   • `tone` is any hue from global.css.
+
+   A NOTE ON WHAT IS PUBLISHED
+   Four of these images were redacted before publication. The two
+   American Heart Association cards had their eCard code and QR code
+   removed, because those let anyone look up or claim the card. The
+   two Youthpass documents had the holder's date of birth removed.
+   Everything else is reproduced as issued.
+   ------------------------------------------------------------ */
+export const certificates = [
+  // ---------- Abiya Ahad ----------
+  {
+    id: 'abiya-bls',
+    title: 'Basic Life Support (BLS) Provider',
+    issuer: 'American Heart Association',
+    detail: 'Issued 12 July 2025, valid to July 2027. Learnet Skills Limited, Noida.',
+    holder: 'abiya-ahad',
+    year: 2025,
+    category: 'Clinical certification',
+    tone: 'crimson',
+    file: 'certificates/abiya-bls.jpg',
+  },
+  {
+    id: 'abiya-acls',
+    title: 'Advanced Cardiovascular Life Support (ACLS) Provider',
+    issuer: 'American Heart Association',
+    detail: 'Issued 14 July 2025, valid to July 2027. Learnet Skills Limited, Noida.',
+    holder: 'abiya-ahad',
+    year: 2025,
+    category: 'Clinical certification',
+    tone: 'crimson',
+    file: 'certificates/abiya-acls.jpg',
+  },
+  {
+    id: 'abiya-nih-clinical-research',
+    title: 'Introduction to the Principles and Practice of Clinical Research',
+    issuer: 'National Institutes of Health',
+    detail: 'Office of Clinical Research Education and Collaboration Outreach, 2025–2026.',
+    holder: 'abiya-ahad',
+    year: 2026,
+    category: 'Research training',
+    tone: 'teal',
+    file: 'certificates/abiya-nih-clinical-research.jpg',
+  },
+  {
+    id: 'abiya-nih-clinical-pharmacology',
+    title: 'Principles of Clinical Pharmacology',
+    issuer: 'National Institutes of Health',
+    detail: 'Office of Clinical Research Education and Collaboration Outreach, 2025–2026.',
+    holder: 'abiya-ahad',
+    year: 2026,
+    category: 'Research training',
+    tone: 'teal',
+    file: 'certificates/abiya-nih-clinical-pharmacology.jpg',
+  },
+  {
+    id: 'abiya-sinai-transgender-medicine',
+    title: 'Transgender Medicine for General Medical Providers',
+    issuer: 'Icahn School of Medicine at Mount Sinai',
+    detail: 'Delivered through Coursera, October 2026.',
+    holder: 'abiya-ahad',
+    year: 2026,
+    category: 'Online course',
+    tone: 'plum',
+    file: 'certificates/abiya-sinai-transgender-medicine.jpg',
+  },
+  {
+    id: 'abiya-nasm-science-diet-exercise',
+    title: 'Science of Diet and Exercise Specialization',
+    issuer: 'National Academy of Sports Medicine',
+    detail: 'Three-course specialization delivered through Coursera, October 2026.',
+    holder: 'abiya-ahad',
+    year: 2026,
+    category: 'Online course',
+    tone: 'amber',
+    file: 'certificates/abiya-nasm-science-diet-exercise.jpg',
+  },
+  {
+    id: 'abiya-nasm-metabolic-makeover',
+    title: 'Metabolic Makeover',
+    issuer: 'National Academy of Sports Medicine',
+    detail: 'Delivered through Coursera, October 2026.',
+    holder: 'abiya-ahad',
+    year: 2026,
+    category: 'Online course',
+    tone: 'amber',
+    file: 'certificates/abiya-nasm-metabolic-makeover.jpg',
+  },
+  {
+    id: 'abiya-nasm-fat-metabolism',
+    title: 'Science of Fat Metabolism',
+    issuer: 'National Academy of Sports Medicine',
+    detail: 'Delivered through Coursera, October 2026.',
+    holder: 'abiya-ahad',
+    year: 2026,
+    category: 'Online course',
+    tone: 'amber',
+    file: 'certificates/abiya-nasm-fat-metabolism.jpg',
+  },
+  {
+    id: 'abiya-nasm-aligning-diet-exercise',
+    title: 'Aligning Diet and Exercise',
+    issuer: 'National Academy of Sports Medicine',
+    detail: 'Delivered through Coursera, October 2026.',
+    holder: 'abiya-ahad',
+    year: 2026,
+    category: 'Online course',
+    tone: 'amber',
+    file: 'certificates/abiya-nasm-aligning-diet-exercise.jpg',
+  },
+  {
+    id: 'abiya-asr-soft-embalming',
+    title: 'Workshop on Soft Embalming',
+    issuer: 'Anatomical Society of Rajasthan',
+    detail:
+      'Department of Anatomy, RNT Medical College, Udaipur, 7 September 2024. Rajasthan Medical Council credit hours granted.',
+    holder: 'abiya-ahad',
+    year: 2024,
+    category: 'Workshop',
+    tone: 'coral',
+    file: 'certificates/abiya-asr-soft-embalming.jpg',
+  },
+  {
+    id: 'abiya-jgu-wellbeing',
+    title: 'Emotional Well-being and Stress Management',
+    issuer: 'O.P. Jindal Global University',
+    detail: 'Jindal Institute of Behavioural Sciences, Sonipat, 12 August 2023.',
+    holder: 'abiya-ahad',
+    year: 2023,
+    category: 'Workshop',
+    tone: 'coral',
+    file: 'certificates/abiya-jgu-wellbeing.jpg',
+  },
+
+  // ---------- Ghezal Dabiry ----------
+  {
+    id: 'ghezal-ehra-paths-af',
+    title: 'EHRA-PATHS: systematic comorbidity management in atrial fibrillation',
+    issuer: 'European Heart Rhythm Association, ESC',
+    detail: 'EACCME accredited, 2 European CME credits. 18 August 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Continuing medical education',
+    tone: 'cyan',
+    file: 'certificates/ghezal-ehra-paths-af.jpg',
+  },
+  {
+    id: 'ghezal-acc-diuretic-resistance',
+    title:
+      'Diuretic Resistance Risk and the Efficacy of Natriuresis-Guided Diuretic Therapy in Acute Heart Failure',
+    issuer: 'American College of Cardiology Foundation',
+    detail: 'Journal-based CME, post hoc analysis from the PUSH-AHF trial. 26 July 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Continuing medical education',
+    tone: 'crimson',
+    file: 'certificates/ghezal-acc-diuretic-resistance.jpg',
+  },
+  {
+    id: 'ghezal-acc-troponin-gen6',
+    title: 'High Sensitivity Cardiac Troponin T Gen6 Assay in Suspected Myocardial Infarction',
+    issuer: 'American College of Cardiology Foundation',
+    detail: 'Journal-based CME on diagnostic accuracy, cutoffs and clinical implications. 25 July 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Continuing medical education',
+    tone: 'crimson',
+    file: 'certificates/ghezal-acc-troponin-gen6.jpg',
+  },
+  {
+    id: 'ghezal-stanford-antimicrobial',
+    title: 'Antimicrobial Stewardship: Improving Clinical Outcomes by Optimization of Antibiotic Practices',
+    issuer: 'Stanford University School of Medicine',
+    detail: '7.00 AMA PRA Category 1 Credits. 18 August 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Continuing medical education',
+    tone: 'steel',
+    file: 'certificates/ghezal-stanford-antimicrobial.jpg',
+  },
+  {
+    id: 'ghezal-stanford-migraine',
+    title: 'An Evidence-Based Approach to the Diagnosis and Management of Migraines in Adults',
+    issuer: 'Stanford University School of Medicine',
+    detail: '1.50 AMA PRA Category 1 Credits. Primary care and general neurology setting. 22 August 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Continuing medical education',
+    tone: 'steel',
+    file: 'certificates/ghezal-stanford-migraine.jpg',
+  },
+  {
+    id: 'ghezal-aha-peripartum-hypertension',
+    title: 'Challenges of Hypertension in the Peripartum Period',
+    issuer: 'American Heart Association',
+    detail: 'Educational activity, 25 July 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Continuing medical education',
+    tone: 'crimson',
+    file: 'certificates/ghezal-aha-peripartum-hypertension.jpg',
+  },
+  {
+    id: 'ghezal-aha-attr',
+    title: 'Future Directions and Areas of Uncertainty for ATTR',
+    issuer: 'American Heart Association',
+    detail: 'Educational activity on transthyretin amyloidosis, 24 July 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Continuing medical education',
+    tone: 'crimson',
+    file: 'certificates/ghezal-aha-attr.jpg',
+  },
+  {
+    id: 'ghezal-jhu-r-programming',
+    title: 'R Programming',
+    issuer: 'Johns Hopkins University',
+    detail: 'Bloomberg School of Public Health, Department of Biostatistics. Coursera, October 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Online course',
+    tone: 'teal',
+    file: 'certificates/ghezal-jhu-r-programming.jpg',
+  },
+  {
+    id: 'ghezal-michigan-python',
+    title: 'Python Basics',
+    issuer: 'University of Michigan',
+    detail: 'Delivered through Coursera, October 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Online course',
+    tone: 'teal',
+    file: 'certificates/ghezal-michigan-python.jpg',
+  },
+  {
+    id: 'ghezal-unicef-public-health-reporting',
+    title: 'Public Health Reporting',
+    issuer: 'UNICEF',
+    detail: 'Delivered through the Agora platform, 25 July 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Professional development',
+    tone: 'rose',
+    file: 'certificates/ghezal-unicef-public-health-reporting.jpg',
+  },
+  {
+    id: 'ghezal-unwomen-gender',
+    title: 'I Know Gender 1-2-3',
+    issuer: 'UN Women Training Centre',
+    detail:
+      'Gender concepts, international frameworks for gender equality, and promoting gender equality throughout the UN system. 18 August 2026.',
+    holder: 'ghezal-dabiry',
+    year: 2026,
+    category: 'Professional development',
+    tone: 'rose',
+    file: 'certificates/ghezal-unwomen-gender.jpg',
+  },
+  {
+    id: 'ghezal-intersect-entrepreneurship',
+    title: 'Entrepreneurship Training Certificate',
+    issuer: 'INTERSECT, METU Migration Research Centre',
+    detail:
+      'Inclusive Entrepreneurship: Bringing Together Refugee, Immigrant and Host Communities. November 2021.',
+    holder: 'ghezal-dabiry',
+    year: 2021,
+    category: 'Professional development',
+    tone: 'plum',
+    file: 'certificates/ghezal-intersect-entrepreneurship.jpg',
+  },
+  {
+    id: 'ghezal-youthpass-isave',
+    title: 'Strategic Partnerships in the Youth Field',
+    issuer: 'Youthpass, Erasmus+, European Commission',
+    detail:
+      'ISAVE project: Inclusive Self-Advocacy Education and Empowerment for Young Refugees and Asylum Seekers. Dublin, 2021–2023.',
+    holder: 'ghezal-dabiry',
+    year: 2023,
+    category: 'Professional development',
+    tone: 'plum',
+    file: 'certificates/ghezal-youthpass-isave.jpg',
+  },
+
+  // ---------- Sultan Mujib Dabiry ----------
+  {
+    id: 'mujib-acc-middle-east-2024',
+    title: 'ACC Middle East 2024',
+    issuer: 'American College of Cardiology',
+    detail: 'Certificate of participation, 16–18 October 2024.',
+    holder: 'sultan-mujib-dabiry',
+    year: 2024,
+    category: 'Conference and symposium',
+    tone: 'crimson',
+    file: 'certificates/mujib-acc-middle-east-2024.jpg',
+  },
+  {
+    id: 'mujib-netis-neuromodulation',
+    title: '1st NeTIS Young Neuromodulators Congress',
+    issuer: 'NeTIS and NÖROTEK AR-GE',
+    detail: 'Participation certificate, 22–23 May 2021.',
+    holder: 'sultan-mujib-dabiry',
+    year: 2021,
+    category: 'Conference and symposium',
+    tone: 'cyan',
+    file: 'certificates/mujib-netis-neuromodulation.jpg',
+  },
+  {
+    id: 'mujib-covid-symposium',
+    title: 'COVID-19 Symposium',
+    issuer: 'Yüksek İhtisas and Ufuk Medical Students Associations',
+    detail: 'Participation certificate, 27–28 November 2020.',
+    holder: 'sultan-mujib-dabiry',
+    year: 2020,
+    category: 'Conference and symposium',
+    tone: 'teal',
+    file: 'certificates/mujib-covid-symposium.jpg',
+  },
+  {
+    id: 'mujib-cquni-asthma',
+    title: 'Asthma: An Introduction to Management',
+    issuer: 'CQUniversity',
+    detail: 'Verified digital badge, issued 29 October 2024.',
+    holder: 'sultan-mujib-dabiry',
+    year: 2024,
+    category: 'Continuing medical education',
+    tone: 'amber',
+    file: 'certificates/mujib-cquni-asthma.jpg',
+  },
+  {
+    id: 'mujib-intersect-entrepreneurship',
+    title: 'Entrepreneurship Training Certificate',
+    issuer: 'INTERSECT, METU Migration Research Centre',
+    detail:
+      'Inclusive Entrepreneurship: Bringing Together Refugee, Immigrant and Host Communities. November 2021.',
+    holder: 'sultan-mujib-dabiry',
+    year: 2021,
+    category: 'Professional development',
+    tone: 'plum',
+    file: 'certificates/mujib-intersect-entrepreneurship.jpg',
+  },
+  {
+    id: 'mujib-youthpass-isave',
+    title: 'Strategic Partnerships in the Youth Field',
+    issuer: 'Youthpass, Erasmus+, European Commission',
+    detail:
+      'ISAVE project: Inclusive Self-Advocacy Education and Empowerment for Young Refugees and Asylum Seekers. Dublin, 2021–2023.',
+    holder: 'sultan-mujib-dabiry',
+    year: 2023,
+    category: 'Professional development',
+    tone: 'plum',
+    file: 'certificates/mujib-youthpass-isave.jpg',
+  },
+];
+
+export const certificateCategories = [
+  'Clinical certification',
+  'Continuing medical education',
+  'Research training',
+  'Online course',
+  'Conference and symposium',
+  'Workshop',
+  'Professional development',
+  'MedAtlas module',
+];
+
+
+/* ------------------------------------------------------------
    FREQUENTLY ASKED QUESTIONS  →  /faq
    ------------------------------------------------------------ */
 export const faqs = [
@@ -323,7 +702,7 @@ export const faqs = [
     items: [
       {
         q: 'What is MedAtlas?',
-        a: 'MedAtlas is an international medical research collective. It connects medical students, clinicians, academics and researchers across institutions and countries so that they can plan, conduct and publish research together. It is not a university, a course provider or a commercial company.',
+        a: 'MedAtlas is an international medical research collective. It connects doctors, medical students, clinicians, academics and researchers across institutions and countries so that they can plan, conduct and publish research together. It is not a university or a commercial company.',
       },
       {
         q: 'Is MedAtlas a registered organisation?',
@@ -340,7 +719,7 @@ export const faqs = [
     items: [
       {
         q: 'Who can join?',
-        a: 'Medical students, junior doctors, clinicians, academics and researchers in related sciences. There is no requirement to be at a research-active institution and no requirement to have published before.',
+        a: 'Doctors, medical students, clinicians, academics and researchers in related sciences. There is no requirement to be at a research-active institution and no requirement to have published before.',
       },
       {
         q: 'Is there a limit on membership?',
@@ -373,7 +752,11 @@ export const faqs = [
       },
       {
         q: 'Do I need prior research experience?',
-        a: 'No. Several of the network’s members began with no publications. Projects are supervised, and the education section is being built to support members learning methodology as they work.',
+        a: 'No. Several of the network’s members began with no publications. Projects are supervised, and the education section supports members learning methodology as they work.',
+      },
+      {
+        q: 'Can I present at a conference through MedAtlas?',
+        a: 'Yes. Members can join abstract submissions and, where the work is accepted, take part in presenting it. Register your interest through the conferences page.',
       },
     ],
   },

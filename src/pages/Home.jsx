@@ -2,28 +2,36 @@ import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import Seo from '../components/Seo';
 import { MARK, NetworkField } from '../components/Brand';
-import { CtaBand, Chip, DivisionCard, Empty, Label, PersonCard } from '../components/ui';
+import {
+  Chip,
+  CtaBand,
+  DivisionCard,
+  Label,
+  PersonCard,
+  ProposeDivisionCard,
+  toneVars,
+} from '../components/ui';
 import { site, values } from '../data/site';
-import { divisions } from '../data/divisions';
+import { divisionCountWord, divisions, divisionTone } from '../data/divisions';
 import { publications } from '../data/publications';
 import { founders } from '../data/people';
-import { projects } from '../data/content';
+import { collaboratorCount, news } from '../data/content';
 
 export default function Home() {
   const featured = publications.filter((p) => p.status === 'published').slice(0, 4);
-  const journals = new Set(publications.map((p) => p.journal).filter(Boolean)).size;
+  const latest = news[0];
 
   return (
     <>
       <Seo
         path="/"
         title={null}
-        description="MedAtlas is an international medical research network connecting medical students, clinicians and academics across borders to produce rigorous, evidence-based medical research."
+        description="MedAtlas is an international medical research network of doctors, medical students, clinicians and academics producing rigorous, evidence-based research across eight research divisions."
       />
 
       {/* ---------------- hero ---------------- */}
       <section className="hero">
-        <NetworkField className="hero__net" nodes={46} seed={21} />
+        <NetworkField className="hero__net" nodes={50} seed={21} />
         <div className="shell">
           <div className="hero__inner">
             <div>
@@ -32,16 +40,16 @@ export default function Home() {
                 International medical research network
               </p>
               <h1>
-                Connecting minds.
+                <span className="l1">Connecting minds.</span>
                 <br />
-                Advancing medicine.
+                <span className="l2">Advancing medicine.</span>
                 <br />
-                <b>Beyond borders.</b>
+                <span className="l3">Beyond borders.</span>
               </h1>
               <p className="hero__copy">
-                MedAtlas brings medical students, clinicians and academics into shared research
-                teams that cross institutions and countries, with one standard of method applied to
-                everything we publish.
+                MedAtlas brings doctors, medical students, clinicians and academics into shared
+                research teams that cross institutions and countries, with one standard of method
+                applied to everything we publish.
               </p>
               <div className="btn-row hero__actions">
                 <Link to="/publications" className="btn btn--cyan">
@@ -53,27 +61,33 @@ export default function Home() {
               </div>
             </div>
 
-            <img
-              className="hero__mark"
-              src={MARK}
-              alt="The MedAtlas mark: a polygonal brain resolving into a network of connected nodes"
-              width="700"
-              height="604"
-            />
+            <div className="hero__markwrap">
+              <span className="hero__glow" aria-hidden="true" />
+              <span className="hero__ring" aria-hidden="true" />
+              <span className="hero__ring" aria-hidden="true" />
+              <img
+                className="hero__mark"
+                src={MARK}
+                alt="The MedAtlas mark: a polygonal brain resolving into a network of connected nodes"
+                width="1300"
+                height="1123"
+                fetchPriority="high"
+              />
+            </div>
           </div>
 
           <div className="hero__strip">
-            <div className="hero__stat">
+            <div className="hero__stat" style={{ '--tone': 'var(--gold)' }}>
               <b>{site.networkStats.researchers}</b>
-              <span>Researchers, clinicians and medical students in the network</span>
+              <span>Doctors, medical students and researchers in the network</span>
             </div>
-            <div className="hero__stat">
+            <div className="hero__stat" style={{ '--tone': 'var(--cyan-bright)' }}>
               <b>{site.networkStats.countries}</b>
               <span>Countries represented across the collective</span>
             </div>
-            <div className="hero__stat">
+            <div className="hero__stat" style={{ '--tone': '#f2a0a0' }}>
               <b>{publications.length}</b>
-              <span>Peer-reviewed outputs across {journals} journals</span>
+              <span>Peer-reviewed outputs across {site.networkStats.journals} journals</span>
             </div>
           </div>
         </div>
@@ -84,7 +98,7 @@ export default function Home() {
         <div className="shell">
           <Reveal className="split split--wide">
             <div>
-              <Label>About MedAtlas</Label>
+              <Label tone="crimson">About MedAtlas</Label>
               <h2 style={{ fontSize: 'var(--t-h2)' }}>
                 A research organisation held together by method, not geography.
               </h2>
@@ -119,9 +133,10 @@ export default function Home() {
                 exceptional.
               </h2>
               <p className="lede" style={{ marginTop: '1rem' }}>
-                We remove the three things that usually stop a good collaboration: no shared
-                standard for protocols, no agreed authorship, and nobody accountable for the
-                analysis.
+                We build the scaffolding a good collaboration needs and rarely has: a shared
+                standard for protocols, authorship agreed before the work starts, and a named
+                person accountable for the analysis. With that in place, the science is free to be
+                the hard part.
               </p>
             </Reveal>
             <Reveal delay={90}>
@@ -131,7 +146,7 @@ export default function Home() {
                 together as a matter of routine.
               </h2>
               <p className="lede" style={{ marginTop: '1rem' }}>
-                We measure that by how quickly a new member reaches a real contribution, and by
+                We measure that by how efficiently a new member reaches a real contribution, and by
                 whether the work holds up to scrutiny after publication.
               </p>
             </Reveal>
@@ -144,23 +159,28 @@ export default function Home() {
         <div className="shell">
           <Reveal className="split split--wide">
             <div>
-              <Label>Research divisions</Label>
+              <Label tone="plum">Research divisions</Label>
               <h2 style={{ fontSize: 'var(--t-h2)' }}>
-                Seven divisions, built to let questions cross between them.
+                {divisionCountWord.charAt(0).toUpperCase() + divisionCountWord.slice(1)} divisions,
+                deliberately adjacent.
               </h2>
             </div>
             <p className="lede">
-              Members join a division rather than a single project. The divisions are deliberately
-              adjacent, because the questions we find most interesting sit between specialties.
+              Members join a division rather than a single project. The divisions are built to sit
+              next to each other, because the questions we find most interesting fall between
+              specialties.
             </p>
           </Reveal>
 
           <div className="grid grid--3 mt-lg">
             {divisions.map((d, i) => (
-              <Reveal key={d.id} delay={i * 50}>
+              <Reveal key={d.id} delay={i * 40}>
                 <DivisionCard division={d} />
               </Reveal>
             ))}
+            <Reveal delay={divisions.length * 40}>
+              <ProposeDivisionCard />
+            </Reveal>
           </div>
         </div>
       </section>
@@ -170,7 +190,7 @@ export default function Home() {
         <div className="shell">
           <Reveal className="split split--wide">
             <div>
-              <Label>Featured research</Label>
+              <Label tone="teal">Featured research</Label>
               <h2 style={{ fontSize: 'var(--t-h2)' }}>Recent work from the network.</h2>
             </div>
             <p className="lede">
@@ -181,10 +201,14 @@ export default function Home() {
 
           <div className="grid grid--2 mt-lg">
             {featured.map((p, i) => (
-              <Reveal key={p.id} delay={i * 60}>
-                <Link className="card" to={`/publications/${p.id}`}>
+              <Reveal key={p.id} delay={i * 50}>
+                <Link
+                  className="card card--tone"
+                  to={`/publications/${p.id}`}
+                  style={toneVars(divisionTone(p.divisions[0]))}
+                >
                   <div className="chips" style={{ marginBottom: '0.7rem' }}>
-                    <Chip tone="cyan">{p.type}</Chip>
+                    <Chip tone={divisionTone(p.divisions[0])}>{p.type}</Chip>
                     {p.journal && <Chip>{p.journal}</Chip>}
                   </div>
                   <h3 style={{ fontFamily: 'var(--serif)', fontWeight: 500, lineHeight: 1.3 }}>
@@ -206,42 +230,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------------- projects ---------------- */}
-      <section className="section">
-        <div className="shell">
-          <Reveal>
-            <Label>Research projects</Label>
-            <h2 style={{ fontSize: 'var(--t-h2)', maxWidth: '20ch' }}>
-              What the divisions are working on now.
-            </h2>
-          </Reveal>
-          <div className="mt-md">
-            {projects.length === 0 ? (
-              <Empty title="The project register is being compiled">
-                <p>
-                  Ongoing and planned projects will be listed here with their research question,
-                  methodology, team and registration number. We publish a project once its protocol
-                  is agreed, rather than listing intentions.
+      {/* ---------------- latest news ---------------- */}
+      {latest && (
+        <section className="section">
+          <div className="shell">
+            <Reveal className="split split--wide">
+              <div>
+                <Label tone={latest.tone || 'amber'}>Latest from the network</Label>
+                <h2 style={{ fontSize: 'var(--t-h2)' }}>{latest.headline}</h2>
+                <p className="lede" style={{ marginTop: '1rem' }}>
+                  {latest.excerpt}
                 </p>
                 <div className="btn-row mt-md">
-                  <Link to="/publications" className="btn btn--ghost">
-                    See completed work instead
+                  <Link to={`/news/${latest.id}`} className="btn btn--ghost">
+                    Read the announcement
+                  </Link>
+                  <Link to="/news" className="btn btn--ghost">
+                    All news
                   </Link>
                 </div>
-              </Empty>
-            ) : (
-              <div className="grid grid--3">
-                {projects.slice(0, 3).map((p) => (
-                  <Link key={p.id} className="card" to={`/projects/${p.id}`}>
-                    <h3>{p.title}</h3>
-                    <p>{p.summary}</p>
-                  </Link>
-                ))}
               </div>
-            )}
+              {latest.video && (
+                <div className="videoframe">
+                  <video
+                    controls
+                    playsInline
+                    preload="none"
+                    poster={`${import.meta.env.BASE_URL}${latest.video.poster}`}
+                  >
+                    <source
+                      src={`${import.meta.env.BASE_URL}${latest.video.src}`}
+                      type="video/mp4"
+                    />
+                  </video>
+                </div>
+              )}
+            </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ---------------- global collaboration ---------------- */}
       <section className="section section--brand">
@@ -250,18 +277,19 @@ export default function Home() {
             <div>
               <Label>Global collaboration</Label>
               <h2 style={{ fontSize: 'var(--t-h2)', color: '#fff' }}>
-                Built to work across institutions from the first meeting.
+                {collaboratorCount} named collaborators across Brazil, Germany, Sweden, Australia
+                and Italy.
               </h2>
             </div>
             <div>
               <p className="lede">
-                MedAtlas works across India, Türkiye and the countries its members write from.
-                Collaboration here means an agreed scope, a shared protocol and authorship settled
-                in advance, not an exchange of introductions.
+                MedAtlas works with researchers at the Federal University of Juiz de Fora, the
+                Instituto de Cardiologia de Porto Alegre, the University of Magdeburg, LMU Munich,
+                Karolinska Institutet, the University of Sydney and SISSA in Trieste.
               </p>
               <div className="btn-row mt-md">
                 <Link to="/collaborations" className="btn btn--cyan">
-                  How we collaborate
+                  See our collaborators
                 </Link>
                 <Link to="/partners" className="btn btn--onbrand">
                   Partner with us
@@ -277,7 +305,7 @@ export default function Home() {
         <div className="shell">
           <Reveal className="split split--wide">
             <div>
-              <Label>The research network</Label>
+              <Label tone="rose">The research network</Label>
               <h2 style={{ fontSize: 'var(--t-h2)' }}>The people behind the work.</h2>
             </div>
             <p className="lede">
@@ -289,7 +317,7 @@ export default function Home() {
 
           <div className="grid grid--3 mt-lg">
             {founders.map((p, i) => (
-              <Reveal key={p.slug} delay={i * 60}>
+              <Reveal key={p.slug} delay={i * 50}>
                 <PersonCard person={p} base="/leadership" />
               </Reveal>
             ))}
@@ -307,19 +335,21 @@ export default function Home() {
       </section>
 
       {/* ---------------- values ---------------- */}
-      <section className="section section--mist">
+      <section className="section section--sand">
         <div className="shell">
           <Reveal>
-            <Label>What we hold to</Label>
+            <Label tone="amber">What we hold to</Label>
             <h2 style={{ fontSize: 'var(--t-h2)', maxWidth: '22ch' }}>
               Six commitments that decide how a MedAtlas project runs.
             </h2>
           </Reveal>
           <div className="grid grid--3 mt-lg">
             {values.map((v, i) => (
-              <Reveal key={v.title} className="card" delay={i * 50}>
-                <h3>{v.title}</h3>
-                <p>{v.body}</p>
+              <Reveal key={v.title} delay={i * 40}>
+                <div className="card card--tone" style={toneVars(v.tone)}>
+                  <h3>{v.title}</h3>
+                  <p>{v.body}</p>
+                </div>
               </Reveal>
             ))}
           </div>
@@ -331,7 +361,7 @@ export default function Home() {
         <div className="shell">
           <CtaBand
             title="There is room on the next protocol."
-            body="Applications are open to clinicians, researchers and medical students. Institutions and research groups can propose a collaboration through the same route."
+            body="Applications are open to doctors, clinicians, researchers and medical students. Institutions and research groups can propose a collaboration through the same route."
             primary={{ to: '/join', label: 'Apply to join' }}
             secondary={{ to: '/contact', label: 'Contact MedAtlas' }}
           />

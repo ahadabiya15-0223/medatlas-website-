@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import Reveal from '../components/Reveal';
 import Seo from '../components/Seo';
-import { Chip, CtaBand, Empty, Label, PageHead } from '../components/ui';
+import { CtaBand, Label, PageHead, toneVars } from '../components/ui';
 import { findResource, resources } from '../data/content';
 import NotFound from './NotFound';
 
@@ -16,32 +16,21 @@ export function EducationIndex() {
 
       <PageHead
         title="Education and research resources"
-        lede="The methodology the network runs on, written down. These guides are being built as the teaching material used inside MedAtlas projects, and published openly as each is finished."
+        lede="The methodology the network runs on, written down. These are the teaching materials used inside MedAtlas projects, and they form the basis of the modules and courses we are building."
         trail={[{ label: 'Home', to: '/' }, { label: 'Education' }]}
       />
 
       <section className="section">
         <div className="shell">
-          <div className="notice" style={{ marginBottom: '2rem' }}>
-            MedAtlas does not offer accredited courses, certificates or qualifications. These are
-            open research resources, not a training programme, and nothing here carries academic
-            credit.
-          </div>
-
-          <Label>Resource library</Label>
+          <Label tone="cyan">Resource library</Label>
           <div className="grid grid--3">
             {resources.map((r, i) => (
-              <Reveal key={r.id} delay={i * 40}>
-                <Link className="card" to={`/education/${r.id}`}>
-                  <div className="chips" style={{ marginBottom: '0.7rem' }}>
-                    <Chip tone={r.status === 'available' ? 'cyan' : 'amber'}>
-                      {r.status === 'available' ? 'Available' : 'In preparation'}
-                    </Chip>
-                  </div>
+              <Reveal key={r.id} delay={i * 35}>
+                <Link className="card card--tone" to={`/education/${r.id}`} style={toneVars(r.tone)}>
                   <h3>{r.title}</h3>
                   <p>{r.summary}</p>
                   <div className="card__foot">
-                    <span className="tlink">See the outline</span>
+                    <span className="tlink">Open the guide</span>
                   </div>
                 </Link>
               </Reveal>
@@ -50,11 +39,11 @@ export function EducationIndex() {
         </div>
       </section>
 
-      <section className="section section--mist">
+      <section className="section section--sand">
         <div className="shell">
           <div className="split split--wide">
             <Reveal>
-              <Label>How members learn here</Label>
+              <Label tone="amber">How members learn here</Label>
               <h2 style={{ fontSize: 'var(--t-h2)' }}>
                 Methodology is taught inside live projects, not beside them.
               </h2>
@@ -62,13 +51,19 @@ export function EducationIndex() {
             <Reveal delay={80}>
               <p className="lede">
                 A member learning to screen does it on a real review, paired with someone
-                experienced, with their decisions checked. The written resources exist to support
-                that work rather than to replace it.
+                experienced, with their decisions checked. The written resources support that work.
               </p>
               <p style={{ marginTop: '1.1rem', color: 'var(--grey)' }}>
-                Future additions will include worked examples, recorded sessions and downloadable
-                templates: extraction forms, risk-of-bias sheets and search string logs.
+                Structured modules and courses are in development, alongside worked examples,
+                recorded sessions and downloadable templates: extraction forms, risk-of-bias sheets
+                and search string logs. Certificates awarded for completed MedAtlas modules will be
+                listed on the certificates page.
               </p>
+              <div className="btn-row mt-md">
+                <Link to="/certificates" className="btn btn--ghost">
+                  See certificates
+                </Link>
+              </div>
             </Reveal>
           </div>
         </div>
@@ -96,7 +91,7 @@ export function ResourceDetail() {
   const others = resources.filter((r) => r.id !== resource.id).slice(0, 3);
 
   return (
-    <>
+    <div style={toneVars(resource.tone)}>
       <Seo
         title={resource.title}
         path={`/education/${resource.id}`}
@@ -111,50 +106,40 @@ export function ResourceDetail() {
           { label: 'Education', to: '/education' },
           { label: resource.title },
         ]}
-      >
-        <div className="chips" style={{ marginTop: '1.2rem' }}>
-          <Chip tone={resource.status === 'available' ? 'cyan' : 'amber'}>
-            {resource.status === 'available' ? 'Available' : 'In preparation'}
-          </Chip>
-        </div>
-      </PageHead>
+      />
 
       <section className="section">
         <div className="shell">
           <div className="split split--wide">
             <div>
-              <Label>What this guide covers</Label>
+              <Label tone={resource.tone}>What this guide covers</Label>
               <ul className="prose" style={{ paddingLeft: '1.1rem' }}>
                 {resource.outline.map((o) => (
                   <li key={o}>{o}</li>
                 ))}
               </ul>
-
-              {resource.status !== 'available' && (
-                <Empty title="This guide is still being written">
-                  <p>
-                    The outline above is the structure it will follow. We publish a resource when
-                    it is finished rather than posting a stub, so there is nothing to download
-                    yet.
-                  </p>
-                  <p style={{ marginTop: '0.8rem' }}>
-                    If you need this material now for a project you are working on, write to us and
-                    we will share what the network currently uses internally.
-                  </p>
-                  <div className="btn-row mt-md">
-                    <Link to="/contact" className="btn btn--ghost">
-                      Ask for the current material
-                    </Link>
-                  </div>
-                </Empty>
-              )}
+              <p className="mt-md" style={{ color: 'var(--grey)', fontSize: 'var(--t-sm)' }}>
+                This guide is being expanded into a full module with worked examples and
+                downloadable templates. If you need the material now for a project you are working
+                on, write to us and we will share what the network currently uses internally.
+              </p>
+              <div className="btn-row mt-md">
+                <Link to="/contact" className="btn btn--ghost">
+                  Ask for the current material
+                </Link>
+              </div>
             </div>
 
             <div>
-              <Label>Other resources</Label>
+              <Label tone={resource.tone}>Other resources</Label>
               <div className="stack">
                 {others.map((r) => (
-                  <Link key={r.id} className="card" to={`/education/${r.id}`}>
+                  <Link
+                    key={r.id}
+                    className="card card--tone"
+                    to={`/education/${r.id}`}
+                    style={toneVars(r.tone)}
+                  >
                     <h3 style={{ fontSize: '1rem' }}>{r.title}</h3>
                     <p style={{ marginTop: '0.35rem' }}>{r.summary}</p>
                   </Link>
@@ -169,6 +154,6 @@ export function ResourceDetail() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

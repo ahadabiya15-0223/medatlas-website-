@@ -83,7 +83,7 @@ export function PublicationsIndex() {
 
       <PageHead
         title="Publications and scientific output"
-        lede={`${publications.length} records across ${journals.length} journals. Every entry links to the version of record, and publication status is stated rather than implied.`}
+        lede={`${publications.length} peer-reviewed records across ${site.networkStats.journals} journals. Every entry links to the version of record, and publication status is stated rather than implied.`}
         trail={[{ label: 'Home', to: '/' }, { label: 'Publications' }]}
       />
 

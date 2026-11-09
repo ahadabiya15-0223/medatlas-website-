@@ -3,7 +3,7 @@ import Reveal from '../components/Reveal';
 import Seo from '../components/Seo';
 import { CtaBand, Label, PageHead } from '../components/ui';
 import { objectives, site, values } from '../data/site';
-import { divisions } from '../data/divisions';
+import { divisionCountWord, divisions } from '../data/divisions';
 
 export default function About() {
   return (
@@ -47,10 +47,6 @@ export default function About() {
                 normally lacks: an agreed standard for protocols, a defined division structure, and
                 an authorship policy written down before the work starts.
               </p>
-              <div className="notice mt-md">
-                A formal institutional timeline will be published here once founding dates and
-                legal status are confirmed. We do not publish dates we have not verified.
-              </div>
             </div>
           </Reveal>
         </div>
@@ -63,7 +59,8 @@ export default function About() {
             <Reveal>
               <Label>Who we are</Label>
               <h2 style={{ fontSize: 'var(--t-h3)' }}>
-                Medical students, clinicians, academics and researchers working as one group.
+                Doctors, medical students, clinicians, academics and researchers working as one
+                group.
               </h2>
               <p className="lede" style={{ marginTop: '1rem' }}>
                 The network is interdisciplinary by composition, not only by intention. Membership
@@ -229,7 +226,7 @@ export default function About() {
                 ideas. What they lack is a structure.
               </p>
               <p style={{ marginTop: '1.1rem', color: 'var(--grey)' }}>
-                MedAtlas supplies that structure across {divisions.length} divisions, so the
+                MedAtlas supplies that structure across {divisionCountWord} divisions, so the
                 question gets answered properly and everyone who did the work is named on it.
               </p>
               <div className="btn-row mt-md">
